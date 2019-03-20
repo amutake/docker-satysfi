@@ -5,7 +5,7 @@ This repository provides a docker image for [SATySFi](https://github.com/gfngfn/
 
 Images are available at [Docker Hub - amutake/satysfi](https://hub.docker.com/r/amutake/satysfi/).
 
-Current latest version is `latest` and `0.0.3-dev2019.02.13`.
+Current latest version is `latest` and `0.0.3-dev2019.03.10`.
 
 How to use
 ----------
