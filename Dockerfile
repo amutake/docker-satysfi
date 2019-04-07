@@ -1,8 +1,5 @@
 FROM ocaml/opam2:ubuntu-18.04-ocaml-4.07
 
-# Remove unnecessary ocaml compilers
-RUN opam switch | grep ocaml-variants | awk '{ print $1 }' | xargs -I{} opam switch remove {}
-
 # Setup SATySFi
 ENV SATYSFI_VERSION=0.0.3+dev2019.03.10
 RUN opam repository add satysfi-external https://github.com/gfngfn/satysfi-external-repo.git
