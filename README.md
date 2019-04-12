@@ -8,7 +8,7 @@ Images are available at [Docker Hub - amutake/satysfi](https://hub.docker.com/r/
 | tag | size | description |
 | --- | ---- | ----------- |
 | `latest` | [![](https://images.microbadger.com/badges/image/amutake/satysfi.svg)](https://microbadger.com/images/amutake/satysfi "Get your own image badge on microbadger.com") | same as `0.0.3-dev2019.03.10` |
-| `slim` | | slim image containing only satysfi and satyrographos binary |
+| `slim` | [![](https://images.microbadger.com/badges/image/amutake/satysfi:slim.svg)](https://microbadger.com/images/amutake/satysfi:slim "Get your own image badge on microbadger.com") | slim image containing only satysfi and satyrographos binary |
 | `0.0.3-dev2019.03.10` | [![](https://images.microbadger.com/badges/image/amutake/satysfi:0.0.3-dev2019.03.10.svg)](https://microbadger.com/images/amutake/satysfi:0.0.3-dev2019.03.10 "Get your own image badge on microbadger.com") | an image for `satysfi.0.0.3+dev2019.03.10`, containing full opam environment |
 | `0.0.3` | [![](https://images.microbadger.com/badges/image/amutake/satysfi:0.0.3.svg)](https://microbadger.com/images/amutake/satysfi:0.0.3 "Get your own image badge on microbadger.com") | an image for `satysfi.0.0.3`, containing full opam environment |
 
