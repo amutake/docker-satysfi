@@ -1,6 +1,8 @@
 satysfi-docker
 ==============
 
+[![Build Status](https://travis-ci.com/amutake/satysfi-docker.svg?branch=master)](https://travis-ci.com/amutake/satysfi-docker)
+
 This repository provides a docker image for [SATySFi](https://github.com/gfngfn/SATySFi) and [Satyrographos](https://github.com/na4zagin3/satyrographos).
 
 Images are available at [Docker Hub - amutake/satysfi](https://hub.docker.com/r/amutake/satysfi/).
