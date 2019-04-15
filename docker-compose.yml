@@ -1,0 +1,33 @@
+version: '3.2'
+services:
+  satysfi:
+    image: amutake/satysfi:latest
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      cache_from:
+        - amutake/satysfi:latest
+  slim:
+    image: amutake/satysfi:slim
+    build:
+      context: .
+      dockerfile: ./Dockerfile.slim
+      cache_from:
+        - amutake/satysfi:slim
+  build-demo:
+    image: amutake/satysfi:latest
+    user: opam
+    volumes:
+       - ./SATySFi/demo:/home/opam/satysfi
+    entrypoint:
+       - sudo
+       - docker-entrypoint.sh
+       - satysfi
+       - demo.saty
+  build-demo-slim:
+    image: amutake/satysfi:slim
+    volumes:
+       - ./SATySFi/demo:/satysfi
+    entrypoint:
+       - satysfi
+       - demo.saty
