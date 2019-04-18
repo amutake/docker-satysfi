@@ -20,7 +20,7 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
 
 install:
-  - docker-compose pull satysfi slim head
+  - docker-compose pull satysfi slim
   - docker-compose build satysfi slim head
 
 script:
