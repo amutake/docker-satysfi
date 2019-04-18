@@ -35,7 +35,10 @@ nightly tag:
 
 ```
 $ docker run --rm amutake/satysfi:nightly cat /satysfi-revision
+v0.0.3-397-g6137f5c
 $ docker run --rm amutake/satysfi:nightly cat /satyrographos-revision
+v0.0.1.6-4-geaf14c8
 $ docker run --rm amutake/satysfi:nightly cat /build-date
+2019-04-19T00:00:00+00:00
 $ docker run --rm -v $(pwd):/satysfi amutake/satysfi:nightly satysfi demo.saty
 ```
