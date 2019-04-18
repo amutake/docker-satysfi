@@ -20,10 +20,11 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
 
 install:
-  - docker-compose pull satysfi slim
-  - docker-compose build satysfi slim
+  - docker-compose pull satysfi slim head
+  - docker-compose build satysfi slim head
 
 script:
   - git clone https://github.com/gfngfn/SATySFi.git
   - docker-compose up --abort-on-container-exit build-demo
   - docker-compose up --abort-on-container-exit build-demo-slim
+  - docker-compose up --abort-on-container-exit build-demo-head

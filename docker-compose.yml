@@ -14,6 +14,13 @@ services:
       dockerfile: ./Dockerfile.slim
       cache_from:
         - amutake/satysfi:slim
+  head:
+    image: amutake/satysfi:head
+    build:
+      context: .
+      dockerfile: ./Dockerfile.head
+      cache_from:
+        - amutake/satysfi:head
   build-demo:
     image: amutake/satysfi:latest
     user: opam
@@ -26,6 +33,13 @@ services:
        - demo.saty
   build-demo-slim:
     image: amutake/satysfi:slim
+    volumes:
+       - ./SATySFi/demo:/satysfi
+    entrypoint:
+       - satysfi
+       - demo.saty
+  build-demo-head:
+    image: amutake/satysfi:head
     volumes:
        - ./SATySFi/demo:/satysfi
     entrypoint:
