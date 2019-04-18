@@ -11,12 +11,12 @@ jobs:
 workflows:
    version: 2
    nightly:
-     # triggers:
-     #   - schedule:
-     #       cron: "0 0 * * *"
-     #       filters:
-     #         branches:
-     #           only:
-     #             - master
+     triggers:
+       - schedule:
+           cron: "0 0 * * *" # 00:00 in UTC, 09:00 in JST
+           filters:
+             branches:
+               only:
+                 - master
      jobs:
        - head

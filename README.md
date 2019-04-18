@@ -1,7 +1,7 @@
 satysfi-docker
 ==============
 
-[![Build Status](https://travis-ci.com/amutake/satysfi-docker.svg?branch=master)](https://travis-ci.com/amutake/satysfi-docker)
+[![Build Status](https://travis-ci.com/amutake/satysfi-docker.svg?branch=master)](https://travis-ci.com/amutake/satysfi-docker) [![CircleCI](https://circleci.com/gh/amutake/satysfi-docker.svg?style=svg)](https://circleci.com/gh/amutake/satysfi-docker)
 
 This repository provides a docker image for [SATySFi](https://github.com/gfngfn/SATySFi) and [Satyrographos](https://github.com/na4zagin3/satyrographos).
 
@@ -11,6 +11,7 @@ Images are available at [Docker Hub - amutake/satysfi](https://hub.docker.com/r/
 | --- | ---- | ----------- |
 | `latest` | [![](https://images.microbadger.com/badges/image/amutake/satysfi.svg)](https://microbadger.com/images/amutake/satysfi "Get your own image badge on microbadger.com") | same as `0.0.3-dev2019.03.10` |
 | `slim` | [![](https://images.microbadger.com/badges/image/amutake/satysfi:slim.svg)](https://microbadger.com/images/amutake/satysfi:slim "Get your own image badge on microbadger.com") | slim image containing only satysfi and satyrographos binary |
+| `nightly` | [![](https://images.microbadger.com/badges/image/amutake/satysfi:nightly.svg)](https://microbadger.com/images/amutake/satysfi:nightly "Get your own image badge on microbadger.com") | nightly build of HEAD SATySFi and Satyrographos |
 | `0.0.3-dev2019.03.10` | [![](https://images.microbadger.com/badges/image/amutake/satysfi:0.0.3-dev2019.03.10.svg)](https://microbadger.com/images/amutake/satysfi:0.0.3-dev2019.03.10 "Get your own image badge on microbadger.com") | an image for `satysfi.0.0.3+dev2019.03.10`, containing full opam environment |
 | `0.0.3` | [![](https://images.microbadger.com/badges/image/amutake/satysfi:0.0.3.svg)](https://microbadger.com/images/amutake/satysfi:0.0.3 "Get your own image badge on microbadger.com") | an image for `satysfi.0.0.3`, containing full opam environment |
 
@@ -28,4 +29,13 @@ slim tags:
 
 ```
 $ docker run --rm -v $(pwd):/satysfi amutake/satysfi:slim satysfi demo.saty
+```
+
+nightly tag:
+
+```
+$ docker run --rm amutake/satysfi:nightly cat /satysfi-revision
+$ docker run --rm amutake/satysfi:nightly cat /satyrographos-revision
+$ docker run --rm amutake/satysfi:nightly cat /build-date
+$ docker run --rm -v $(pwd):/satysfi amutake/satysfi:nightly satysfi demo.saty
 ```
