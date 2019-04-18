@@ -1,0 +1,43 @@
+FROM ocaml/opam2:ubuntu-18.04-ocaml-4.07 AS build-env
+
+RUN opam repository add satysfi-external https://github.com/gfngfn/satysfi-external-repo.git
+RUN opam update
+
+# Install SATySFi
+RUN git clone git://github.com/gfngfn/SATySFi.git /home/opam/SATySFi
+WORKDIR /home/opam/SATySFi
+RUN opam pin add --no-action satysfi .
+RUN opam depext satysfi
+RUN opam install satysfi
+RUN sudo apt-get update
+RUN sudo apt-get install wget
+RUN ./download-fonts.sh
+RUN sed -i -e "s!/usr/local/share!$(opam var share)!" install-libs.sh
+RUN ./install-libs.sh $(opam var share)/satysfi
+
+# Install Satyrographos
+RUN git clone git://github.com/na4zagin3/satyrographos.git /home/opam/satyrographos
+WORKDIR /home/opam/satyrographos
+RUN opam pin add --no-action satyrographos .
+RUN opam depext satyrographos
+RUN opam install satyrographos
+
+# Copy binaries
+RUN eval $(opam env) && \
+  satyrographos install -copy && \
+  mkdir /home/opam/bin && \
+  cp $(which satysfi) /home/opam/bin/ && \
+  cp $(which satyrographos) /home/opam/bin/
+
+# --
+
+FROM ubuntu:18.04
+
+# Copy from build-env
+COPY --from=build-env /home/opam/.satysfi /usr/local/share/satysfi
+COPY --from=build-env /home/opam/bin/satysfi /usr/local/bin/satysfi
+COPY --from=build-env /home/opam/bin/satyrographos /usr/local/bin/satyrographos
+
+# Setup build directory
+RUN mkdir /satysfi
+WORKDIR /satysfi
