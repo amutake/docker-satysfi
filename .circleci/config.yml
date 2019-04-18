@@ -1,0 +1,22 @@
+version: 2
+jobs:
+  head:
+    machine:
+      docker_layer_caching: true
+    steps:
+      - checkout
+      - run: docker login -u $DOCKER_USER -p $DOCKER_PASS
+      - run: docker build -t amutake/satysfi:nightly -f Dockerfile.head .
+      - run: docker push amutake/satysfi:nightly
+workflows:
+   version: 2
+   nightly:
+     # triggers:
+     #   - schedule:
+     #       cron: "0 0 * * *"
+     #       filters:
+     #         branches:
+     #           only:
+     #             - master
+     jobs:
+       - head
