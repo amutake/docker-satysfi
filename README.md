@@ -9,10 +9,10 @@ Images are available at [Docker Hub - amutake/satysfi](https://hub.docker.com/r/
 
 | tag | size | description |
 | --- | ---- | ----------- |
-| `latest` | [![](https://images.microbadger.com/badges/image/amutake/satysfi.svg)](https://microbadger.com/images/amutake/satysfi "Get your own image badge on microbadger.com") | same as `0.0.3-dev2019.03.10` |
+| `latest` | [![](https://images.microbadger.com/badges/image/amutake/satysfi.svg)](https://microbadger.com/images/amutake/satysfi "Get your own image badge on microbadger.com") | same as `0.0.3-dev2019.07.14` |
 | `slim` | [![](https://images.microbadger.com/badges/image/amutake/satysfi:slim.svg)](https://microbadger.com/images/amutake/satysfi:slim "Get your own image badge on microbadger.com") | slim image containing only satysfi and satyrographos binary, the version is same as `latest` |
 | `nightly` | [![](https://images.microbadger.com/badges/image/amutake/satysfi:nightly.svg)](https://microbadger.com/images/amutake/satysfi:nightly "Get your own image badge on microbadger.com") | nightly (00:00 in UTC) build of HEAD SATySFi and Satyrographos |
-| `0.0.3-dev2019.03.10` | [![](https://images.microbadger.com/badges/image/amutake/satysfi:0.0.3-dev2019.03.10.svg)](https://microbadger.com/images/amutake/satysfi:0.0.3-dev2019.03.10 "Get your own image badge on microbadger.com") | an image for `satysfi.0.0.3+dev2019.03.10`, containing full opam environment |
+| `0.0.3-dev2019.07.14` | [![](https://images.microbadger.com/badges/image/amutake/satysfi:0.0.3-dev2019.07.14.svg)](https://microbadger.com/images/amutake/satysfi:0.0.3-dev2019.07.14 "Get your own image badge on microbadger.com") | an image for `satysfi.0.0.3+dev2019.07.14`, containing full opam environment |
 | `0.0.3` | [![](https://images.microbadger.com/badges/image/amutake/satysfi:0.0.3.svg)](https://microbadger.com/images/amutake/satysfi:0.0.3 "Get your own image badge on microbadger.com") | an image for `satysfi.0.0.3`, containing full opam environment |
 
 
