@@ -1,7 +1,7 @@
 FROM ocaml/opam2:ubuntu-18.04-ocaml-4.07 AS build-env
 
 RUN opam repository add satysfi-external https://github.com/gfngfn/satysfi-external-repo.git
-RUN opam update
+RUN git pull && opam update
 
 # Install SATySFi
 RUN git clone git://github.com/gfngfn/SATySFi.git /home/opam/SATySFi
