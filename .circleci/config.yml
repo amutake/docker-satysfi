@@ -6,7 +6,7 @@ jobs:
     steps:
       - checkout
       - run: docker login -u $DOCKER_USER -p $DOCKER_PASS
-      - run: docker build -t amutake/satysfi:nightly -f Dockerfile.head .
+      - run: docker build -t amutake/satysfi:nightly -f Dockerfile.head --no-cache=true .
       - run: docker push amutake/satysfi:nightly
 workflows:
    version: 2
