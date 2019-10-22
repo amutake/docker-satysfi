@@ -1,7 +1,7 @@
 satysfi-docker
 ==============
 
-[![Build Status](https://travis-ci.com/amutake/satysfi-docker.svg?branch=master)](https://travis-ci.com/amutake/satysfi-docker) [![CircleCI](https://circleci.com/gh/amutake/satysfi-docker.svg?style=svg)](https://circleci.com/gh/amutake/satysfi-docker)
+[![Build Status](https://travis-ci.com/amutake/satysfi-docker.svg?branch=master)](https://travis-ci.com/amutake/satysfi-docker) [![Actions Status](https://github.com/amutake/satysfi/workflows/nightly/badge.svg)](https://github.com/amutake/satysfi/actions)
 
 This repository provides a docker image for [SATySFi](https://github.com/gfngfn/SATySFi) and [Satyrographos](https://github.com/na4zagin3/satyrographos).
 
