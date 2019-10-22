@@ -1,0 +1,27 @@
+on:
+  release:
+    types: [published]
+
+jobs:
+  full:
+    runs-on: ubuntu-latest
+    env:
+      DOCKER_PASS: ${{ secrets.DOCKER_PASS }}
+    steps:
+      - uses: actions/checkout@v1
+      - run: docker login -u amutake -p $DOCKER_PASS
+      - run: docker build -t amutake/satysfi:${GITHUB_REF} -f Dockerfile .
+      - run: docker tag amutake/satysfi:${GITHUB_REF} amutake/satysfi:latest
+      - run: docker push amutake/satysfi:${GITHUB_REF}
+      - run: docker push amutake/satysfi:latest
+  slim:
+    runs-on: ubuntu-latest
+    env:
+      DOCKER_PASS: ${{ secrets.DOCKER_PASS }}
+    steps:
+      - uses: actions/checkout@v1
+      - run: docker login -u amutake -p $DOCKER_PASS
+      - run: docker build -t amutake/satysfi:${GITHUB_REF}-slim -f Dockerfile.slim .
+      - run: docker tag amutake/satysfi:${GITHUB_REF}-slim amutake/satysfi:slim
+      - run: docker push amutake/satysfi:${GITHUB_REF}-slim
+      - run: docker push amutake/satysfi:slim

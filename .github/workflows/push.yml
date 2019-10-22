@@ -1,0 +1,11 @@
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dockerfile: [Dockerfile, Dockerfile.slim, Dockerfile.head]
+    steps:
+      - uses: actions/checkout@v1
+      - run: docker build -f ${{ matrix.dockerfile }} .
