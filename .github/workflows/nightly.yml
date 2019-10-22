@@ -1,0 +1,14 @@
+on: push
+  # schedule:
+  #   - cron: 0 0 * * *
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      DOCKER_PASS: ${{ secrets.DOCKER_PASS }}
+    steps:
+      - uses: actions/checkout@v1
+      - run: docker login -u amutake -p $DOCKER_PASS
+      - run: docker build -t amutake/satysfi:nightly -f Dockerfile.head .
+      - run: docker push amutake/satysfi:nightly
