@@ -10,9 +10,9 @@ RUN opam install satysfi.${SATYSFI_VERSION} satysfi-lib-dist.${SATYSFI_VERSION} 
 RUN eval $(opam env) && satyrographos install
 
 # Setup build directory
-RUN mkdir /home/opam/satysfi
-WORKDIR /home/opam/satysfi
+RUN sudo mkdir /satysfi
+WORKDIR /satysfi
 
 # Setup entrypoint
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
-ENTRYPOINT ["docker-entrypoint.sh"]
+ENTRYPOINT ["sudo", "docker-entrypoint.sh"]
