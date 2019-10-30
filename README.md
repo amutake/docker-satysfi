@@ -20,16 +20,14 @@ Images are available at [Docker Hub - amutake/satysfi](https://hub.docker.com/r/
 How to use
 ----------
 
-non-slim tags:
-
 ```
-$ docker run --rm -v $(pwd):/home/opam/satysfi amutake/satysfi satysfi demo.saty
+$ docker run --rm -v $(pwd):/satysfi amutake/satysfi:TAG satysfi demo.saty
 ```
 
-slim tags:
+until `0.0.3-dev2019.07.14`:
 
 ```
-$ docker run --rm -v $(pwd):/satysfi amutake/satysfi:slim satysfi demo.saty
+$ docker run --rm -v $(pwd):/home/opam/satysfi amutake/satysfi:TAG satysfi demo.saty
 ```
 
 nightly tag:
@@ -41,5 +39,4 @@ $ docker run --rm amutake/satysfi:nightly cat /satyrographos-revision
 v0.0.1.6-4-geaf14c8
 $ docker run --rm amutake/satysfi:nightly cat /build-date
 2019-04-19T00:00:00+00:00
-$ docker run --rm -v $(pwd):/satysfi amutake/satysfi:nightly satysfi demo.saty
 ```
