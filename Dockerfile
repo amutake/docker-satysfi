@@ -10,7 +10,7 @@ RUN opam install satysfi.${SATYSFI_VERSION} satysfi-lib-dist.${SATYSFI_VERSION} 
 RUN eval $(opam env) && satyrographos install
 
 # Setup build directory
-RUN mkdir /satysfi
+RUN sudo mkdir /satysfi && sudo chown opam /satysfi
 WORKDIR /satysfi
 
 # Setup entrypoint
