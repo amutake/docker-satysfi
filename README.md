@@ -16,6 +16,7 @@ Images are available at [Docker Hub - amutake/satysfi](https://hub.docker.com/r/
 | `0.0.3-dev2019.11.16` | [![](https://images.microbadger.com/badges/image/amutake/satysfi:0.0.3-dev2019.11.16.svg)](https://microbadger.com/images/amutake/satysfi:0.0.3-dev2019.11.16 "Get your own image badge on microbadger.com") | an image for `satysfi.0.0.3+dev2019.11.16` and `satyrographos`, containing full opam environment |
 | `0.0.3-dev2019.11.16-slim` | [![](https://images.microbadger.com/badges/image/amutake/satysfi:0.0.3-dev2019.11.16-slim.svg)](https://microbadger.com/images/amutake/satysfi:0.0.3-dev2019.11.16-slim "Get your own image badge on microbadger.com") | an image for `satysfi.0.0.3+dev2019.11.16` and `satyrographos`, without opam environment |
 | `0.0.3` | [![](https://images.microbadger.com/badges/image/amutake/satysfi:0.0.3.svg)](https://microbadger.com/images/amutake/satysfi:0.0.3 "Get your own image badge on microbadger.com") | an image for `satysfi.0.0.3` and `satyrographos`, containing full opam environment |
+| `0.0.3-slim` | [![](https://images.microbadger.com/badges/image/amutake/satysfi:0.0.3-slim.svg)](https://microbadger.com/images/amutake/satysfi:0.0.3-slim "Get your own image badge on microbadger.com") | an image for `satysfi.0.0.3-slim` and `satyrographos`, without opam environment |
 
 
 How to use
@@ -25,7 +26,7 @@ How to use
 $ docker run --rm -v $(pwd):/satysfi amutake/satysfi:TAG satysfi demo.saty
 ```
 
-until `0.0.3-dev2019.07.14`:
+until `0.0.3-dev2019.07.14` (except for `0.0.3`):
 
 ```
 $ docker run --rm -v $(pwd):/home/opam/satysfi amutake/satysfi:TAG satysfi demo.saty
