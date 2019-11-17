@@ -5,6 +5,7 @@ ENV SATYSFI_VERSION=0.0.3
 ENV SATYROGRAPHOS_VERSION=0.0.2.1
 
 # Setup SATySFi & Satyrographos
+RUN apt-get install -y ruby
 RUN opam update
 RUN opam depext satysfi.${SATYSFI_VERSION} satysfi-lib-dist.${SATYSFI_VERSION} satyrographos.${SATYROGRAPHOS_VERSION}
 RUN opam install satysfi.${SATYSFI_VERSION} satysfi-lib-dist.${SATYSFI_VERSION} satyrographos.${SATYROGRAPHOS_VERSION}
