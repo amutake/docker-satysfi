@@ -1,46 +1,45 @@
-FROM ocaml/opam2:ubuntu-18.04-ocaml-4.07 AS build-env
+FROM amutake/satysfi-base:opam-2.0.5-ocaml-4.09.0 AS build-env
 
-RUN opam repository add satysfi-external https://github.com/gfngfn/satysfi-external-repo.git
-RUN git pull && opam update
+RUN opam update
 
 # Install SATySFi
-RUN git clone git://github.com/gfngfn/SATySFi.git /home/opam/SATySFi
-WORKDIR /home/opam/SATySFi
+RUN git clone git://github.com/gfngfn/SATySFi.git /root/SATySFi
+WORKDIR /root/SATySFi
 RUN opam pin add --no-action satysfi .
 RUN opam depext satysfi
 RUN opam install satysfi
-RUN sudo apt-get update
-RUN sudo apt-get install wget
+# temporary patch
+# cf. https://github.com/gfngfn/SATySFi/pull/203
+RUN sed -i -e "s!oscdl.ipa.go.jp!ipafont.ipa.go.jp!" download-fonts.sh
 RUN ./download-fonts.sh
 RUN sed -i -e "s!/usr/local/share!$(opam var share)!" install-libs.sh
 RUN ./install-libs.sh $(opam var share)/satysfi
-RUN git describe --tags > /home/opam/satysfi-revision
+RUN git describe --tags > /satysfi-revision
 
 # Install Satyrographos
-RUN git clone git://github.com/na4zagin3/satyrographos.git /home/opam/satyrographos
-WORKDIR /home/opam/satyrographos
+RUN git clone git://github.com/na4zagin3/satyrographos.git /root/satyrographos
+WORKDIR /root/satyrographos
 RUN opam pin add --no-action satyrographos .
 RUN opam depext satyrographos
 RUN opam install satyrographos
-RUN git describe --tags > /home/opam/satyrographos-revision
+RUN git describe --tags > /satyrographos-revision
 
 # Copy binaries
 RUN eval $(opam env) && \
   satyrographos install -copy && \
-  mkdir /home/opam/bin && \
-  cp $(which satysfi) /home/opam/bin/ && \
-  cp $(which satyrographos) /home/opam/bin/
+  cp $(which satysfi) / && \
+  cp $(which satyrographos) /
 
 # --
 
 FROM ubuntu:18.04
 
 # Copy from build-env
-COPY --from=build-env /home/opam/.satysfi /usr/local/share/satysfi
-COPY --from=build-env /home/opam/bin/satysfi /usr/local/bin/satysfi
-COPY --from=build-env /home/opam/bin/satyrographos /usr/local/bin/satyrographos
-COPY --from=build-env /home/opam/satysfi-revision /satysfi-revision
-COPY --from=build-env /home/opam/satyrographos-revision /satyrographos-revision
+COPY --from=build-env /root/.satysfi /usr/local/share/satysfi
+COPY --from=build-env /satysfi /usr/local/bin/satysfi
+COPY --from=build-env /satyrographos /usr/local/bin/satyrographos
+COPY --from=build-env /satysfi-revision /satysfi-revision
+COPY --from=build-env /satyrographos-revision /satyrographos-revision
 
 RUN date --iso-8601=seconds > /build-date
 

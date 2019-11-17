@@ -1,18 +1,18 @@
-FROM ocaml/opam2:ubuntu-18.04-ocaml-4.07
+FROM amutake/satysfi-base:opam-2.0.5-ocaml-4.09.0
 
-# Setup SATySFi
-ENV SATYSFI_VERSION=0.0.3+dev2019.07.14
-RUN opam repository add satysfi-external https://github.com/gfngfn/satysfi-external-repo.git
-RUN opam repository add satyrographos-repo https://github.com/na4zagin3/satyrographos-repo.git
-RUN git pull && opam update
-RUN opam depext satysfi.${SATYSFI_VERSION} satysfi-lib-dist.${SATYSFI_VERSION} satyrographos
-RUN opam install satysfi.${SATYSFI_VERSION} satysfi-lib-dist.${SATYSFI_VERSION} satyrographos
-RUN eval $(opam env) && satyrographos install
+# Versions
+ENV SATYSFI_VERSION=0.0.3+dev2019.11.16
+ENV SATYROGRAPHOS_VERSION=0.0.2.1
+
+# Setup SATySFi & Satyrographos
+RUN opam update
+RUN opam depext satysfi.${SATYSFI_VERSION} satysfi-lib-dist.${SATYSFI_VERSION} satyrographos.${SATYROGRAPHOS_VERSION}
+RUN opam install satysfi.${SATYSFI_VERSION} satysfi-lib-dist.${SATYSFI_VERSION} satyrographos.${SATYROGRAPHOS_VERSION}
+RUN opam config exec -- satyrographos install
 
 # Setup build directory
-RUN sudo mkdir /satysfi
+RUN mkdir /satysfi
 WORKDIR /satysfi
 
 # Setup entrypoint
-COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
-ENTRYPOINT ["sudo", "docker-entrypoint.sh"]
+ENTRYPOINT ["opam", "config", "exec", "--"]
