@@ -1,8 +1,8 @@
 satysfi-docker
 ==============
 
-[![Build Status](https://github.com/amutake/satysfi-docker/workflows/build/badge.svg)](https://github.com/amutake/satysfi-docker/actions)
-[![Nightly Build Status](https://github.com/amutake/satysfi-docker/workflows/nightly/badge.svg)](https://github.com/amutake/satysfi-docker/actions)
+[![Build Status](https://github.com/amutake/satysfi-docker/workflows/build/badge.svg)](https://github.com/amutake/satysfi-docker/actions?query=workflow%3Abuild)
+[![Nightly Build Status](https://github.com/amutake/satysfi-docker/workflows/nightly/badge.svg)](https://github.com/amutake/satysfi-docker/actions?query=workflow%3Anightly)
 
 This repository provides a docker image for [SATySFi](https://github.com/gfngfn/SATySFi) and [Satyrographos](https://github.com/na4zagin3/satyrographos).
 
