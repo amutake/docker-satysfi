@@ -8,23 +8,25 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DOCKER_PASS: ${{ secrets.DOCKER_PASS }}
-      TAG: ${GITHUB_REF#refs/tags/}
     steps:
       - uses: actions/checkout@v1
+      - id: get_version
+        run: echo ::set-output name=name::${GITHUB_REF#refs/tags/}
       - run: docker login -u amutake -p $DOCKER_PASS
-      - run: docker build -t amutake/satysfi:${TAG} -f Dockerfile .
-      - run: docker tag amutake/satysfi:${TAG} amutake/satysfi:latest
-      - run: docker push amutake/satysfi:${TAG}
+      - run: docker build -t amutake/satysfi:${{ steps.get_version.outputs.version }} -f Dockerfile .
+      - run: docker tag amutake/satysfi:${{ steps.get_version.outputs.version }} amutake/satysfi:latest
+      - run: docker push amutake/satysfi:${{ steps.get_version.outputs.version }}
       - run: docker push amutake/satysfi:latest
   slim:
     runs-on: ubuntu-latest
     env:
       DOCKER_PASS: ${{ secrets.DOCKER_PASS }}
-      TAG: ${GITHUB_REF#refs/tags/}
     steps:
       - uses: actions/checkout@v1
+      - id: get_version
+        run: echo ::set-output name=name::${GITHUB_REF#refs/tags/}
       - run: docker login -u amutake -p $DOCKER_PASS
-      - run: docker build -t amutake/satysfi:${TAG}-slim -f Dockerfile.slim .
-      - run: docker tag amutake/satysfi:${TAG}-slim amutake/satysfi:slim
-      - run: docker push amutake/satysfi:${TAG}-slim
+      - run: docker build -t amutake/satysfi:${{ steps.get_version.outputs.version }}-slim -f Dockerfile.slim .
+      - run: docker tag amutake/satysfi:${{ steps.get_version.outputs.version }}-slim amutake/satysfi:slim
+      - run: docker push amutake/satysfi:${{ steps.get_version.outputs.version }}-slim
       - run: docker push amutake/satysfi:slim
