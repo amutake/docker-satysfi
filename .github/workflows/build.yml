@@ -10,6 +10,9 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       # TODO: enable docker build caching when GitHub Actions supports it.
-      - run: docker build -t amutake/satysfi:ci -f ${{ matrix.dockerfile }} .
+      - run: |
+          docker build -t amutake/satysfi:ci -f ${{ matrix.dockerfile }} \
+            --build-arg REVISION=$(git rev-parse --short HEAD) \
+            --build-arg BUILD_DATE=$(date --iso-8601=seconds) .
       - run: git clone git://github.com/gfngfn/SATySFi.git
       - run: docker run --rm -v $(pwd)/SATySFi/demo:/satysfi amutake/satysfi:ci satysfi demo.saty
