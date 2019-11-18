@@ -13,7 +13,7 @@ jobs:
       - id: get_version
         run: echo ::set-output name=version::${GITHUB_REF#refs/tags/}
       - run: docker login -u amutake -p $DOCKER_PASS
-      - run: docker build -t amutake/satysfi:${{ steps.get_version.outputs.version }} -f Dockerfile .
+      - run: docker build -t amutake/satysfi:${{ steps.get_version.outputs.version }} -f Dockerfile --build-arg REVISION=$(git rev-parse --short HEAD) .
       - run: docker tag amutake/satysfi:${{ steps.get_version.outputs.version }} amutake/satysfi:latest
       - run: docker push amutake/satysfi:${{ steps.get_version.outputs.version }}
       - run: docker push amutake/satysfi:latest
@@ -26,7 +26,7 @@ jobs:
       - id: get_version
         run: echo ::set-output name=version::${GITHUB_REF#refs/tags/}
       - run: docker login -u amutake -p $DOCKER_PASS
-      - run: docker build -t amutake/satysfi:${{ steps.get_version.outputs.version }}-slim -f Dockerfile.slim .
+      - run: docker build -t amutake/satysfi:${{ steps.get_version.outputs.version }}-slim -f Dockerfile.slim --build-arg REVISION=$(git rev-parse --short HEAD) .
       - run: docker tag amutake/satysfi:${{ steps.get_version.outputs.version }}-slim amutake/satysfi:slim
       - run: docker push amutake/satysfi:${{ steps.get_version.outputs.version }}-slim
       - run: docker push amutake/satysfi:slim

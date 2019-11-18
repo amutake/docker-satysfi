@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - run: docker login -u amutake -p $DOCKER_PASS
-      - run: docker build -t amutake/satysfi:nightly -f Dockerfile.head .
+      - run: docker build -t amutake/satysfi:nightly -f Dockerfile.head --build-arg REVISION=$(git rev-parse --short HEAD) .
       - run: git clone git://github.com/gfngfn/SATySFi.git
       - run: docker run --rm -v $(pwd)/SATySFi/demo:/satysfi amutake/satysfi:nightly satysfi demo.saty
       - run: docker push amutake/satysfi:nightly
