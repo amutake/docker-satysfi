@@ -19,13 +19,14 @@ FROM ubuntu:18.04
 
 # OCI Annotations (https://github.com/opencontainers/image-spec/blob/master/annotations.md)
 ARG BUILD_DATE
+ARG VERSION
 ARG REVISION
 LABEL org.opencontainers.image.created=$BUILD_DATE \
       org.opencontainers.image.authors="amutake" \
       org.opencontainers.image.url="https://github.com/amutake/satysfi-docker" \
       org.opencontainers.image.documentation="https://github.com/amutake/satysfi-docker" \
       org.opencontainers.image.source="https://github.com/amutake/satysfi-docker" \
-      org.opencontainers.image.version=$SATYSFI_VERSION \
+      org.opencontainers.image.version=$VERSION \
       org.opencontainers.image.revision=$REVISION \
       org.opencontainers.image.vendor="amutake" \
       org.opencontainers.image.licenses="Apache-2.0" \

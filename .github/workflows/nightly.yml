@@ -13,8 +13,9 @@ jobs:
       - run: docker login -u amutake -p $DOCKER_PASS
       - run: |
           docker build -t amutake/satysfi:nightly -f Dockerfile.head \
-            --build-arg REVISION=$(git rev-parse --short HEAD) \
-            --build-arg BUILD_DATE=$(date --iso-8601=seconds) .
+            --build-arg BUILD_DATE=$(date --iso-8601=seconds) \
+            --build-arg VERSION=$(date --iso-8601=date)-nightly \
+            --build-arg REVISION=$(git rev-parse --short HEAD) .
       - run: git clone git://github.com/gfngfn/SATySFi.git
       - run: docker run --rm -v $(pwd)/SATySFi/demo:/satysfi amutake/satysfi:nightly satysfi demo.saty
       - run: docker push amutake/satysfi:nightly
