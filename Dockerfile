@@ -1,5 +1,10 @@
 FROM amutake/satysfi-base:opam-2.0.5-ocaml-4.09.0
 
+# OCI image-spec (https://github.com/opencontainers/image-spec/blob/master/annotations.md)
+ARG VCS_REF
+LABEL org.opencontainers.image.revision=$VCS_REF \
+      org.opencontainers.image.source="https://github.com/amutake/satysfi-docker"
+
 # Versions
 ENV SATYSFI_VERSION=0.0.3+dev2019.11.16
 ENV SATYROGRAPHOS_VERSION=0.0.2.1
