@@ -8,8 +8,8 @@ This repository provides a docker image for [SATySFi](https://github.com/gfngfn/
 
 Images are available at [Docker Hub - amutake/satysfi](https://hub.docker.com/r/amutake/satysfi/).
 
-| tag/size | description |
-| ------- | ----------- |
+| tag | size | description |
+| --- | ---- | ----------- |
 | `latest` | [![Custom badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fdocker-hub-shields-io-xvyqxicwkq-uc.a.run.app%2Famutake%2Fsatysfi%2Flatest)](https://microbadger.com/images/amutake/satysfi "Get your own image badge on microbadger.com") | same as `0.0.3-dev2019.11.16` |
 | `slim` | [![Custom badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fdocker-hub-shields-io-xvyqxicwkq-uc.a.run.app%2Famutake%2Fsatysfi%2Fslim)](https://microbadger.com/images/amutake/satysfi:slim "Get your own image badge on microbadger.com") | same as `0.0.3-dev2019.11.16-slim` |
 | `nightly` | [![Custom badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fdocker-hub-shields-io-xvyqxicwkq-uc.a.run.app%2Famutake%2Fsatysfi%2Fnightly)](https://microbadger.com/images/amutake/satysfi:nightly "Get your own image badge on microbadger.com") | nightly (00:00 in UTC) build of HEAD SATySFi and Satyrographos |
