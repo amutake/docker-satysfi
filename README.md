@@ -8,15 +8,15 @@ This repository provides a docker image for [SATySFi](https://github.com/gfngfn/
 
 Images are available at [Docker Hub - amutake/satysfi](https://hub.docker.com/r/amutake/satysfi/).
 
-| tag | size | description |
-| --- | ---- | ----------- |
-| `latest` | [![](https://images.microbadger.com/badges/image/amutake/satysfi.svg)](https://microbadger.com/images/amutake/satysfi "Get your own image badge on microbadger.com") | same as `0.0.3-dev2019.11.16` |
-| `slim` | [![](https://images.microbadger.com/badges/image/amutake/satysfi:slim.svg)](https://microbadger.com/images/amutake/satysfi:slim "Get your own image badge on microbadger.com") | same as `0.0.3-dev2019.11.16-slim` |
-| `nightly` | [![](https://images.microbadger.com/badges/image/amutake/satysfi:nightly.svg)](https://microbadger.com/images/amutake/satysfi:nightly "Get your own image badge on microbadger.com") | nightly (00:00 in UTC) build of HEAD SATySFi and Satyrographos |
-| `0.0.3-dev2019.11.16` | [![](https://images.microbadger.com/badges/image/amutake/satysfi:0.0.3-dev2019.11.16.svg)](https://microbadger.com/images/amutake/satysfi:0.0.3-dev2019.11.16 "Get your own image badge on microbadger.com") | an image for `satysfi.0.0.3+dev2019.11.16` and `satyrographos`, containing full opam environment |
-| `0.0.3-dev2019.11.16-slim` | [![](https://images.microbadger.com/badges/image/amutake/satysfi:0.0.3-dev2019.11.16-slim.svg)](https://microbadger.com/images/amutake/satysfi:0.0.3-dev2019.11.16-slim "Get your own image badge on microbadger.com") | an image for `satysfi.0.0.3+dev2019.11.16` and `satyrographos`, without opam environment |
-| `0.0.3` | [![](https://images.microbadger.com/badges/image/amutake/satysfi:0.0.3.svg)](https://microbadger.com/images/amutake/satysfi:0.0.3 "Get your own image badge on microbadger.com") | an image for `satysfi.0.0.3` and `satyrographos`, containing full opam environment |
-| `0.0.3-slim` | [![](https://images.microbadger.com/badges/image/amutake/satysfi:0.0.3-slim.svg)](https://microbadger.com/images/amutake/satysfi:0.0.3-slim "Get your own image badge on microbadger.com") | an image for `satysfi.0.0.3` and `satyrographos`, without opam environment |
+| tag/size | description |
+| ------- | ----------- |
+| `latest` | [![Custom badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fdocker-hub-shields-io-xvyqxicwkq-uc.a.run.app%2Famutake%2Fsatysfi%2Flatest)](https://microbadger.com/images/amutake/satysfi "Get your own image badge on microbadger.com") | same as `0.0.3-dev2019.11.16` |
+| `slim` | [![Custom badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fdocker-hub-shields-io-xvyqxicwkq-uc.a.run.app%2Famutake%2Fsatysfi%2Fslim)](https://microbadger.com/images/amutake/satysfi:slim "Get your own image badge on microbadger.com") | same as `0.0.3-dev2019.11.16-slim` |
+| `nightly` | [![Custom badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fdocker-hub-shields-io-xvyqxicwkq-uc.a.run.app%2Famutake%2Fsatysfi%2Fnightly)](https://microbadger.com/images/amutake/satysfi:nightly "Get your own image badge on microbadger.com") | nightly (00:00 in UTC) build of HEAD SATySFi and Satyrographos |
+| `0.0.3-dev2019.11.16` | [![Custom badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fdocker-hub-shields-io-xvyqxicwkq-uc.a.run.app%2Famutake%2Fsatysfi%2F0.0.3-dev2019.11.16)](https://microbadger.com/images/amutake/satysfi:0.0.3-dev2019.11.16 "Get your own image badge on microbadger.com") | an image for `satysfi.0.0.3+dev2019.11.16` and `satyrographos`, containing full opam environment |
+| `0.0.3-dev2019.11.16-slim` | [![Custom badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fdocker-hub-shields-io-xvyqxicwkq-uc.a.run.app%2Famutake%2Fsatysfi%2F0.0.3-dev2019.11.16-slim)](https://microbadger.com/images/amutake/satysfi:0.0.3-dev2019.11.16-slim "Get your own image badge on microbadger.com") | an image for `satysfi.0.0.3+dev2019.11.16` and `satyrographos`, without opam environment |
+| `0.0.3` | [![Custom badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fdocker-hub-shields-io-xvyqxicwkq-uc.a.run.app%2Famutake%2Fsatysfi%2F0.0.3)](https://microbadger.com/images/amutake/satysfi:0.0.3 "Get your own image badge on microbadger.com") | an image for `satysfi.0.0.3` and `satyrographos`, containing full opam environment |
+| `0.0.3-slim` | [![Custom badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fdocker-hub-shields-io-xvyqxicwkq-uc.a.run.app%2Famutake%2Fsatysfi%2F0.0.3-slim)](https://microbadger.com/images/amutake/satysfi:0.0.3-slim "Get your own image badge on microbadger.com") | an image for `satysfi.0.0.3` and `satyrographos`, without opam environment |
 
 
 How to use
