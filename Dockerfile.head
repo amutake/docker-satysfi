@@ -5,12 +5,16 @@ RUN opam update
 # Install SATySFi
 RUN git clone git://github.com/gfngfn/SATySFi.git /root/SATySFi
 WORKDIR /root/SATySFi
-RUN opam pin add --no-action satysfi .
-RUN opam depext satysfi
-RUN opam install satysfi
-# temporary patch
+
+# temporary patches
+# cf. https://github.com/gfngfn/SATySFi/pull/206
+RUN sed -i -e 's!"core_kernel" {>= "v0.10.0"}!"core_kernel" {>= "v0.10.0" \& < "v0.13.0"}!' satysfi.opam
 # cf. https://github.com/gfngfn/SATySFi/pull/203
 RUN sed -i -e "s!oscdl.ipa.go.jp!ipafont.ipa.go.jp!" download-fonts.sh
+
+RUN opam pin add --no-action --kind local satysfi .
+RUN opam depext satysfi
+RUN opam install satysfi
 RUN ./download-fonts.sh
 RUN sed -i -e "s!/usr/local/share!$(opam var share)!" install-libs.sh
 RUN ./install-libs.sh $(opam var share)/satysfi
@@ -19,7 +23,7 @@ RUN git describe --tags > /satysfi-revision
 # Install Satyrographos
 RUN git clone git://github.com/na4zagin3/satyrographos.git /root/satyrographos
 WORKDIR /root/satyrographos
-RUN opam pin add --no-action satyrographos .
+RUN opam pin add --no-action --kind local satyrographos .
 RUN opam depext satyrographos
 RUN opam install satyrographos
 RUN git describe --tags > /satyrographos-revision
