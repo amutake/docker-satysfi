@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v1
       - id: get_version
         run: echo ::set-output name=version::${GITHUB_REF#refs/tags/}
-      - run: echo $DOCKERHUB_ACCESS_TOKEN | docker login -u $DOCKERHUB_USER --password-stdin
+      - run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_ACCESS_TOKEN
       - run: |
           docker build -t amutake/satysfi:${{ steps.get_version.outputs.version }} \
             -f Dockerfile \
@@ -30,7 +30,7 @@ jobs:
       - uses: actions/checkout@v1
       - id: get_version
         run: echo ::set-output name=version::${GITHUB_REF#refs/tags/}
-      - run: echo $DOCKERHUB_ACCESS_TOKEN | docker login -u $DOCKERHUB_USER --password-stdin
+      - run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_ACCESS_TOKEN
       - run: |
           docker build -t amutake/satysfi:${{ steps.get_version.outputs.version }}-slim \
             -f Dockerfile.slim \

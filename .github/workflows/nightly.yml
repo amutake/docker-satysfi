@@ -10,7 +10,7 @@ jobs:
       DOCKER_PASS: ${{ secrets.DOCKER_PASS }}
     steps:
       - uses: actions/checkout@v1
-      - run: echo $DOCKERHUB_ACCESS_TOKEN | docker login -u $DOCKERHUB_USER --password-stdin
+      - run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_ACCESS_TOKEN
       - run: |
           docker build -t amutake/satysfi:nightly -f Dockerfile.head \
             --build-arg BUILD_DATE=$(date --iso-8601=seconds) \
