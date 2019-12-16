@@ -6,13 +6,11 @@ on:
 jobs:
   full:
     runs-on: ubuntu-latest
-    env:
-      DOCKER_PASS: ${{ secrets.DOCKER_PASS }}
     steps:
       - uses: actions/checkout@v1
       - id: get_version
         run: echo ::set-output name=version::${GITHUB_REF#refs/tags/}
-      - run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_ACCESS_TOKEN
+      - run: docker login -u ${{ secrets.DOCKERHUB_USER }} -p ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
       - run: |
           docker build -t amutake/satysfi:${{ steps.get_version.outputs.version }} \
             -f Dockerfile \
@@ -24,13 +22,11 @@ jobs:
       - run: docker push amutake/satysfi:latest
   slim:
     runs-on: ubuntu-latest
-    env:
-      DOCKER_PASS: ${{ secrets.DOCKER_PASS }}
     steps:
       - uses: actions/checkout@v1
       - id: get_version
         run: echo ::set-output name=version::${GITHUB_REF#refs/tags/}
-      - run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_ACCESS_TOKEN
+      - run: docker login -u ${{ secrets.DOCKERHUB_USER }} -p ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
       - run: |
           docker build -t amutake/satysfi:${{ steps.get_version.outputs.version }}-slim \
             -f Dockerfile.slim \
