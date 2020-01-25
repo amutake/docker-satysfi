@@ -1,8 +1,8 @@
 FROM amutake/satysfi-base:opam-2.0.5-ocaml-4.09.0
 
 # Versions
-ENV SATYSFI_VERSION=0.0.3+dev2019.11.16
-ENV SATYROGRAPHOS_VERSION=0.0.2.1
+ENV SATYSFI_VERSION=0.0.4
+ENV SATYROGRAPHOS_VERSION=0.0.2.2
 
 # OCI Annotations (https://github.com/opencontainers/image-spec/blob/master/annotations.md)
 ARG BUILD_DATE
