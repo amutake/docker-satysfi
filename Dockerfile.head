@@ -9,8 +9,6 @@ WORKDIR /root/SATySFi
 # temporary patches
 # cf. https://github.com/gfngfn/SATySFi/pull/206
 RUN sed -i -e 's!"core_kernel" {>= "v0.10.0"}!"core_kernel" {>= "v0.10.0" \& < "v0.13.0"}!' satysfi.opam
-# cf. https://github.com/gfngfn/SATySFi/pull/203
-RUN sed -i -e "s!oscdl.ipa.go.jp!ipafont.ipa.go.jp!" download-fonts.sh
 
 RUN opam pin add --no-action --kind local satysfi .
 RUN opam depext satysfi
