@@ -1,4 +1,4 @@
-FROM amutake/satysfi-base:opam-2.0.5-ocaml-4.09.0
+FROM amutake/satysfi-base:opam-2.0.6-ocaml-4.06.0
 
 # Versions
 ENV SATYSFI_VERSION=0.0.4

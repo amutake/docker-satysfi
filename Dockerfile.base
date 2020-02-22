@@ -1,8 +1,8 @@
 FROM ubuntu:18.04
 
 # Versions
-ENV OCAML_VERSION=4.09.0
-ENV OPAM_VERSION=2.0.5
+ENV OCAML_VERSION=4.06.0
+ENV OPAM_VERSION=2.0.6
 
 # opam's config vars
 # suppress `Running as root is not recommended` warning
