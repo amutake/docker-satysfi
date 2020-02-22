@@ -1,22 +1,6 @@
-FROM amutake/satysfi-base:opam-2.0.5-ocaml-4.09.0 AS build-env
+FROM amutake/satysfi-base:opam-2.0.6-ocaml-4.06.0 AS build-env
 
 RUN opam update
-
-# Install SATySFi
-RUN git clone git://github.com/gfngfn/SATySFi.git /root/SATySFi
-WORKDIR /root/SATySFi
-
-# temporary patches
-# cf. https://github.com/gfngfn/SATySFi/pull/206
-RUN sed -i -e 's!"core_kernel" {>= "v0.10.0"}!"core_kernel" {>= "v0.10.0" \& < "v0.13.0"}!' satysfi.opam
-
-RUN opam pin add --no-action --kind local satysfi .
-RUN opam depext satysfi
-RUN opam install satysfi
-RUN ./download-fonts.sh
-RUN sed -i -e "s!/usr/local/share!$(opam var share)!" install-libs.sh
-RUN ./install-libs.sh $(opam var share)/satysfi
-RUN git describe --tags > /satysfi-revision
 
 # Install Satyrographos
 RUN git clone git://github.com/na4zagin3/satyrographos.git /root/satyrographos
@@ -25,6 +9,20 @@ RUN opam pin add --no-action --kind local satyrographos .
 RUN opam depext satyrographos
 RUN opam install satyrographos
 RUN git describe --tags > /satyrographos-revision
+
+# Install SATySFi
+# SATySFi (satysfi-dist) installation must be after satyrographos installation
+# because $(opam var share)/satysfi is removed due to satysfi reinstallation caused by satyrographos.
+# cf. https://github.com/amutake/satysfi-docker/pull/17
+RUN git clone git://github.com/gfngfn/SATySFi.git /root/SATySFi
+WORKDIR /root/SATySFi
+RUN opam pin add --no-action --kind local satysfi .
+RUN opam depext satysfi
+RUN opam install satysfi
+RUN ./download-fonts.sh
+RUN sed -i -e "s!/usr/local/share!$(opam var share)!" install-libs.sh
+RUN ./install-libs.sh $(opam var share)/satysfi
+RUN git describe --tags > /satysfi-revision
 
 # Copy binaries
 RUN eval $(opam env) && \
