@@ -19,8 +19,6 @@ WORKDIR /root/SATySFi
 RUN opam pin add --no-action --kind local satysfi .
 RUN opam depext satysfi
 RUN opam install satysfi
-# The below patch will be removed after SATySFi#228 is merged.
-RUN sed -i -e "s!IPAexfont00301!IPAexfont00401!g" download-fonts.sh
 RUN ./download-fonts.sh
 RUN sed -i -e "s!/usr/local/share!$(opam var share)!" install-libs.sh
 RUN ./install-libs.sh $(opam var share)/satysfi
