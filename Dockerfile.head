@@ -19,6 +19,8 @@ WORKDIR /root/SATySFi
 RUN opam pin add --no-action --kind local satysfi .
 RUN opam depext satysfi
 RUN opam install satysfi
+# TODO: Remove this line when https://github.com/gfngfn/SATySFi/pull/240 is merged
+RUN sed -i -e "s!ipafont.ipa.go.jp!moji.or.jp/wp-content/ipafont!" download-fonts.sh
 RUN ./download-fonts.sh
 RUN sed -i -e "s!/usr/local/share!$(opam var share)!" install-libs.sh
 RUN ./install-libs.sh $(opam var share)/satysfi
