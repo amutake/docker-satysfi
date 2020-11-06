@@ -51,7 +51,7 @@ jobs:
             amutake/satysfi:${{ matrix.tag-alias }}
           build-args: |
             BUILD_DATE=${{ needs.info.outputs.date }}
-            VERSION=${{ needs.info.outputs.version }}
+            VERSION=${{ matrix.tag }}
             REVISION=${{ needs.info.outputs.revision }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
