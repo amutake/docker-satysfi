@@ -14,12 +14,6 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
-      - uses: actions/cache@v2
-        with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-Dockerfile.head-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-buildx-Dockerfile.head-
       - id: args
         run: |
           echo "::set-output name=date::$(date --iso-8601=seconds)"
@@ -35,8 +29,6 @@ jobs:
             BUILD_DATE=${{ steps.args.outputs.date }}
             VERSION=${{ steps.args.outputs.version }}
             REVISION=${{ steps.args.outputs.revision }}
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache
       - run: git clone git://github.com/gfngfn/SATySFi.git
       - run: docker run --rm -v $(pwd)/SATySFi/demo:/satysfi amutake/satysfi:nightly satysfi demo.saty
       - run: docker push amutake/satysfi:nightly
