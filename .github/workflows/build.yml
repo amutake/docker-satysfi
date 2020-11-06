@@ -23,7 +23,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-buildx-${{ matrix.dockerfile }}-
       - id: args
-        run:
+        run: |
           echo "::set-output name=date::$(date --iso-8601=seconds)"
           echo "::set-output name=revision::$(git rev-parse --short HEAD)"
       - uses: docker/build-push-action@v2
