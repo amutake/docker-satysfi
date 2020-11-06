@@ -4,6 +4,17 @@ FROM ghcr.io/amutake/satysfi-base-image:opam-2.0.7-ocaml-4.11.1
 ENV SATYSFI_VERSION=0.0.5+dev2020.09.05
 ENV SATYROGRAPHOS_VERSION=0.0.2.6
 
+# Setup SATySFi & Satyrographos
+RUN apt-get update
+RUN opam update
+RUN opam depext satysfi.${SATYSFI_VERSION} satysfi-dist.${SATYSFI_VERSION} satyrographos.${SATYROGRAPHOS_VERSION}
+RUN opam install satysfi.${SATYSFI_VERSION} satysfi-dist.${SATYSFI_VERSION} satyrographos.${SATYROGRAPHOS_VERSION}
+RUN opam config exec -- satyrographos install
+
+# Setup build directory
+RUN mkdir /satysfi
+WORKDIR /satysfi
+
 # OCI Annotations (https://github.com/opencontainers/image-spec/blob/master/annotations.md)
 ARG BUILD_DATE
 ARG VERSION
@@ -20,17 +31,6 @@ LABEL org.opencontainers.image.created=$BUILD_DATE \
       org.opencontainers.image.title="SATySFi and Satyrographos image with full opam environment" \
       org.opencontainers.image.description="SATySFi and Satyrographos image with full opam environment"
 # TODO: add `org.opencontainers.image.ref.name` (but what is this?)
-
-# Setup SATySFi & Satyrographos
-RUN apt-get update
-RUN opam update
-RUN opam depext satysfi.${SATYSFI_VERSION} satysfi-dist.${SATYSFI_VERSION} satyrographos.${SATYROGRAPHOS_VERSION}
-RUN opam install satysfi.${SATYSFI_VERSION} satysfi-dist.${SATYSFI_VERSION} satyrographos.${SATYROGRAPHOS_VERSION}
-RUN opam config exec -- satyrographos install
-
-# Setup build directory
-RUN mkdir /satysfi
-WORKDIR /satysfi
 
 # Setup entrypoint
 ENTRYPOINT ["opam", "config", "exec", "--"]
