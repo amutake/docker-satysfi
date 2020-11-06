@@ -22,4 +22,4 @@ jobs:
           context: .
           file: ./Dockerfile.base
           push: true
-          tags: ${{ github.repository_owner }}/satysfi-base-image:${{ github.event.inputs.tag }}
+          tags: amutake/satysfi-base-image:${{ github.event.inputs.tag }}
