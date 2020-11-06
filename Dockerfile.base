@@ -4,6 +4,9 @@ FROM ubuntu:20.04
 ENV OCAML_VERSION=4.11.1
 ENV OPAM_VERSION=2.0.7
 
+# avoid tzdata hung: https://serverfault.com/a/992421
+ENV DEBIAN_FRONTEND=noninteractive
+
 # opam's config vars
 # suppress `Running as root is not recommended` warning
 ENV OPAMROOTISOK=true
