@@ -1,4 +1,4 @@
-FROM amutake/satysfi-base:opam-2.0.6-ocaml-4.10.0 AS build-env
+FROM ghcr.io/amutake/satysfi-base-image:opam-2.0.7-ocaml-4.11.1 AS build-env
 
 # Versions
 ENV SATYSFI_VERSION=0.0.5+dev2020.09.05
@@ -16,7 +16,7 @@ RUN eval $(opam env) && \
 
 # --
 
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 # OCI Annotations (https://github.com/opencontainers/image-spec/blob/master/annotations.md)
 ARG BUILD_DATE
