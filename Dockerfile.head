@@ -1,5 +1,6 @@
 FROM amutake/satysfi-base:opam-2.0.6-ocaml-4.10.0 AS build-env
 
+RUN apt-get update
 RUN opam update
 
 # Install Satyrographos
