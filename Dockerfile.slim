@@ -18,6 +18,15 @@ RUN eval $(opam env) && \
 
 FROM ubuntu:20.04
 
+# Copy from build-env
+COPY --from=build-env /root/.satysfi /usr/local/share/satysfi
+COPY --from=build-env /satysfi /usr/local/bin/satysfi
+COPY --from=build-env /satyrographos /usr/local/bin/satyrographos
+
+# Setup build directory
+RUN mkdir /satysfi
+WORKDIR /satysfi
+
 # OCI Annotations (https://github.com/opencontainers/image-spec/blob/master/annotations.md)
 ARG BUILD_DATE
 ARG VERSION
@@ -34,12 +43,3 @@ LABEL org.opencontainers.image.created=$BUILD_DATE \
       org.opencontainers.image.title="SATySFi and Satyrographos image without opam environment" \
       org.opencontainers.image.description="SATySFi and Satyrographos image without opam environment"
 # TODO: add `org.opencontainers.image.ref.name` (but what is this?)
-
-# Copy from build-env
-COPY --from=build-env /root/.satysfi /usr/local/share/satysfi
-COPY --from=build-env /satysfi /usr/local/bin/satysfi
-COPY --from=build-env /satyrographos /usr/local/bin/satyrographos
-
-# Setup build directory
-RUN mkdir /satysfi
-WORKDIR /satysfi
