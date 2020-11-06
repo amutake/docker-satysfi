@@ -20,15 +20,24 @@ jobs:
   full:
     needs: info
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - dockerfile: Dockerfile
+            tag: ${{ needs.info.outputs.version }}
+            tag-alias: latest
+          - dockerfile: Dockerfile.slim
+            tag: ${{ needs.info.outputs.version }}-slim
+            tag-alias: slim
     steps:
       - uses: actions/checkout@v2
       - uses: docker/setup-buildx-action@v1
       - uses: actions/cache@v2
         with:
           path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-Dockerfile-${{ github.sha }}
+          key: ${{ runner.os }}-buildx-${{ matrix.dockerfile }}-${{ github.sha }}
           restore-keys: |
-            ${{ runner.os }}-buildx-Dockerfile-
+            ${{ runner.os }}-buildx-${{ matrix.dockerfile }}-
       - uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
@@ -38,38 +47,8 @@ jobs:
           file: Dockerfile
           push: true
           tags: |
-            amutake/satysfi:latest
-            amutake/satysfi:${{ needs.info.outputs.version }}
-          build-args: |
-            BUILD_DATE=${{ needs.info.outputs.date }}
-            VERSION=${{ needs.info.outputs.version }}
-            REVISION=${{ needs.info.outputs.revision }}
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache
-
-  slim:
-    needs: info
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: docker/setup-buildx-action@v1
-      - uses: actions/cache@v2
-        with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-Dockerfile.slim-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-buildx-Dockerfile.slim-
-      - uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKERHUB_USER }}
-          password: ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
-      - uses: docker/build-push-action@v2
-        with:
-          file: Dockerfile.slim
-          push: true
-          tags: |
-            amutake/satysfi:slim
-            amutake/satysfi:${{ needs.info.outputs.version }}-slim
+            amutake/satysfi:${{ matrix.tag }}
+            amutake/satysfi:${{ matrix.tag-alias }}
           build-args: |
             BUILD_DATE=${{ needs.info.outputs.date }}
             VERSION=${{ needs.info.outputs.version }}
