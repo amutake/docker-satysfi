@@ -22,6 +22,7 @@ LABEL org.opencontainers.image.created=$BUILD_DATE \
 # TODO: add `org.opencontainers.image.ref.name` (but what is this?)
 
 # Setup SATySFi & Satyrographos
+RUN apt-get update
 RUN opam update
 RUN opam depext satysfi.${SATYSFI_VERSION} satysfi-dist.${SATYSFI_VERSION} satyrographos.${SATYROGRAPHOS_VERSION}
 RUN opam install satysfi.${SATYSFI_VERSION} satysfi-dist.${SATYSFI_VERSION} satyrographos.${SATYROGRAPHOS_VERSION}
