@@ -18,6 +18,7 @@ jobs:
           echo "::set-output name=revision::$(git rev-parse --short HEAD)"
 
   full:
+    needs: info
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -45,7 +46,9 @@ jobs:
             REVISION=${{ needs.info.outputs.revision }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
+
   slim:
+    needs: info
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
