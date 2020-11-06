@@ -6,7 +6,7 @@ on:
 jobs:
   info:
     outputs:
-      date: ${{ steps.info.outputs.version }}
+      date: ${{ steps.info.outputs.date }}
       version: ${{ steps.info.outputs.version }}
       revision: ${{ steps.info.outputs.revision }}
     runs-on: ubuntu-latest
@@ -17,7 +17,7 @@ jobs:
           echo "::set-output name=version::${GITHUB_REF#refs/tags/}"
           echo "::set-output name=revision::$(git rev-parse --short HEAD)"
 
-  full:
+  release:
     needs: info
     runs-on: ubuntu-latest
     strategy:
