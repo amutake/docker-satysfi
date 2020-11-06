@@ -29,6 +29,7 @@ jobs:
         with:
           file: Dockerfile.head
           push: false
+          load: true
           tags: amutake/satysfi:nightly
           build-args: |
             BUILD_DATE=${{ steps.args.outputs.date }}

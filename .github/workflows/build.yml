@@ -30,6 +30,7 @@ jobs:
         with:
           file: ${{ matrix.dockerfile }}
           push: false
+          load: true
           tags: amutake/satysfi:ci
           build-args: |
             BUILD_DATE=${{ steps.args.outputs.date }}
