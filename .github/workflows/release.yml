@@ -44,7 +44,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
       - uses: docker/build-push-action@v2
         with:
-          file: Dockerfile
+          file: ${{ matrix.dockerfile }}
           push: true
           tags: |
             amutake/satysfi:${{ matrix.tag }}
