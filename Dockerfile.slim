@@ -8,7 +8,8 @@ ENV SATYROGRAPHOS_VERSION=0.0.2.8
 RUN apt-get update
 RUN opam update
 RUN opam depext satysfi.${SATYSFI_VERSION} satysfi-dist.${SATYSFI_VERSION} satyrographos.${SATYROGRAPHOS_VERSION}
-RUN opam install satysfi.${SATYSFI_VERSION} satysfi-dist.${SATYSFI_VERSION} satyrographos.${SATYROGRAPHOS_VERSION} opam-file-format.2.1.0 # tmp
+RUN opam install satysfi.${SATYSFI_VERSION} satysfi-dist.${SATYSFI_VERSION} satyrographos.${SATYROGRAPHOS_VERSION} \
+  opam-file-format.2.1.0 # temporary fix. ref: https://github.com/ocaml/opam-file-format/issues/33
 RUN eval $(opam env) && \
   satyrographos install -copy && \
   cp $(which satysfi) / && \

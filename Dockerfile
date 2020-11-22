@@ -2,13 +2,14 @@ FROM ghcr.io/amutake/satysfi-base-image:opam-2.0.7-ocaml-4.11.1
 
 # Versions
 ENV SATYSFI_VERSION=0.0.5+dev2020.09.05
-ENV SATYROGRAPHOS_VERSION=0.0.2.7
+ENV SATYROGRAPHOS_VERSION=0.0.2.8
 
 # Setup SATySFi & Satyrographos
 RUN apt-get update
 RUN opam update
 RUN opam depext satysfi.${SATYSFI_VERSION} satysfi-dist.${SATYSFI_VERSION} satyrographos.${SATYROGRAPHOS_VERSION}
-RUN opam install satysfi.${SATYSFI_VERSION} satysfi-dist.${SATYSFI_VERSION} satyrographos.${SATYROGRAPHOS_VERSION} opam-file-format.2.1.0
+RUN opam install satysfi.${SATYSFI_VERSION} satysfi-dist.${SATYSFI_VERSION} satyrographos.${SATYROGRAPHOS_VERSION} \
+  opam-file-format.2.1.0 # temporary fix. ref: https://github.com/ocaml/opam-file-format/issues/33
 RUN opam config exec -- satyrographos install
 
 # Setup build directory
