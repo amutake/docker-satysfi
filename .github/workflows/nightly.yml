@@ -23,7 +23,7 @@ jobs:
         with:
           file: Dockerfile.head
           # same as ubuntu image
-          platforms: linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x
+          platforms: linux/amd64,linux/arm/v7,linux/arm64,linux/ppc64le,linux/s390x
           push: false
           load: true
           tags: amutake/satysfi:nightly
