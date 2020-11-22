@@ -8,7 +8,8 @@ RUN git clone git://github.com/na4zagin3/satyrographos.git /root/satyrographos
 WORKDIR /root/satyrographos
 RUN opam pin add --no-action --kind local satyrographos .
 RUN opam depext satyrographos
-RUN opam install satyrographos
+RUN opam install satyrographos \
+  opam-file-format.2.1.0 # temporary fix. ref: https://github.com/ocaml/opam-file-format/issues/33
 RUN git describe --tags > /satyrographos-revision
 
 # Install SATySFi
