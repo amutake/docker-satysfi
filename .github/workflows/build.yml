@@ -13,9 +13,9 @@ jobs:
     strategy:
       matrix:
         dockerfile:
-          # - Dockerfile
-          # - Dockerfile.slim
-          # - Dockerfile.head
+          - Dockerfile
+          - Dockerfile.slim
+          - Dockerfile.head
           - Dockerfile.opam-bin
     steps:
       - uses: actions/checkout@v2
