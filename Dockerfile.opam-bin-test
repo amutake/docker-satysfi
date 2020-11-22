@@ -1,0 +1,62 @@
+FROM ubuntu:20.04
+
+# Versions
+ENV OCAML_VERSION=4.11.1
+ENV OPAM_VERSION=2.0.7
+ENV SATYSFI_VERSION=0.0.5+dev2020.09.05
+ENV SATYROGRAPHOS_VERSION=0.0.2.8
+
+# avoid tzdata hung: https://serverfault.com/a/992421
+ENV DEBIAN_FRONTEND=noninteractive
+
+# opam's config vars
+# suppress `Running as root is not recommended` warning
+ENV OPAMROOTISOK=true
+# always `yes`
+ENV OPAMYES=true
+
+# ref: https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#run
+RUN apt-get update && \
+    apt-get install -y curl patch unzip make m4 gcc git rsync && \
+    rm -rf /var/lib/apt/lists/*
+RUN curl -sL -o /usr/local/bin/opam https://github.com/ocaml/opam/releases/download/${OPAM_VERSION}/opam-${OPAM_VERSION}-$(uname -m)-linux
+RUN chmod a+x /usr/local/bin/opam
+RUN opam init --no-setup --disable-sandboxing --bare
+
+# === ここからは shell script に移行する予定 ===
+# COPY opam-bin.sh /bin/init.sh
+# RUN /bin/init.sh
+
+# opam-bin requires fresh switch (or all dependencies are in local-bin, maybe).
+# In this Dockerfile, plugins switch, satysfi/satyrographos build switch, and installation switch are devided.
+
+RUN opam switch
+RUN opam switch list-available
+RUN opam switch create plugins ${OCAML_VERSION}
+RUN opam install opam-depext
+RUN apt-get update && opam depext opam-bin && rm -rf /var/lib/apt/lists/*
+RUN opam install opam-bin
+RUN opam exec -- opam-bin install
+
+RUN opam switch create ${OCAML_VERSION}
+RUN opam bin list
+RUN opam repo add satysfi-external-repo https://github.com/gfngfn/satysfi-external-repo.git
+RUN opam repo add satyrographos-repo https://github.com/na4zagin3/satyrographos-repo.git
+RUN apt-get update && opam depext satysfi.${SATYSFI_VERSION} satyrographos.${SATYROGRAPHOS_VERSION} && rm -rf /var/lib/apt/lists/*
+RUN opam install satysfi.${SATYSFI_VERSION}
+RUN opam bin list
+# RUN opam install core_kernel.v0.14.0 satyrographos.0.0.2.8
+RUN opam install satysfi-dist.${SATYSFI_VERSION}
+
+RUN opam switch create satysfi --empty --repositories=local-bin
+RUN opam bin config --base-url $HOME/.opam/plugins/opam-bin/store
+RUN opam update
+
+COPY opam-bin.post.sh /bin/init.post.sh
+RUN /bin/init.post.sh
+
+RUN mkdir /satysfi
+WORKDIR /satysfi
+
+# Setup entrypoint
+ENTRYPOINT ["opam", "config", "exec", "--"]
