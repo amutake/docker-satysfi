@@ -19,12 +19,13 @@ opam repo add satyrographos-repo https://github.com/na4zagin3/satyrographos-repo
 apt-get update && \
   opam depext satysfi.${SATYSFI_VERSION} satysfi-dist.${SATYSFI_VERSION} satyrographos.${SATYROGRAPHOS_VERSION} && \
   rm -rf /var/lib/apt/lists/*
-opam install satysfi.${SATYSFI_VERSION} satysfi-dist.${SATYSFI_VERSION} # satyrographos.${SATYROGRAPHOS_VERSION}
+opam install satysfi.${SATYSFI_VERSION} satysfi-dist.${SATYSFI_VERSION} satyrographos.${SATYROGRAPHOS_VERSION} \
+  opam-file-format.2.1.0 # temporary fix. ref: https://github.com/ocaml/opam-file-format/issues/33
 
 # === satysfi switch ===
-RUN opam switch create satysfi --empty --repositories=local-bin
-RUN opam bin config --base-url $HOME/.opam/plugins/opam-bin/store
-RUN opam update
+opam switch create satysfi --empty --repositories=local-bin
+opam bin config --base-url $HOME/.opam/plugins/opam-bin/store
+opam update
 
 function install_with_no_depends() {
   local package=$1
@@ -34,11 +35,9 @@ function install_with_no_depends() {
 }
 
 install_with_no_depends satysfi
-# TODO: uncomment
-# install_with_no_depends satyrographos
+install_with_no_depends satyrographos
 opam install satysfi-dist
-# TODO: uncomment
-# opam config exec -- satyrographos install
+opam config exec -- satyrographos install
 
 # === clean ===
 
