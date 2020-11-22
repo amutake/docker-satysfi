@@ -12,7 +12,11 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        dockerfile: [Dockerfile, Dockerfile.slim, Dockerfile.head]
+        dockerfile:
+          # - Dockerfile
+          # - Dockerfile.slim
+          # - Dockerfile.head
+          - Dockerfile.opam-bin
     steps:
       - uses: actions/checkout@v2
       - uses: docker/setup-buildx-action@v1
