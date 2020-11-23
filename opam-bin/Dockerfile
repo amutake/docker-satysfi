@@ -15,8 +15,8 @@ ENV OPAMROOTISOK=true
 # always `yes`
 ENV OPAMYES=true
 
-COPY opam-bin.sh /bin/init.sh
-RUN /bin/init.sh
+COPY init.sh /tmp/init.sh
+RUN /tmp/init.sh
 
 RUN mkdir /satysfi
 WORKDIR /satysfi
