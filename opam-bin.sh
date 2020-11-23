@@ -44,7 +44,7 @@ function install_with_no_depends() {
   # HACK: force no dependencies
   sed -z 's/depends[^]]*]//' -i ~/.opam/satysfi/.opam-switch/overlay/${package}/opam
   # HACK: force original version
-  sed 's/^version: .*$/version: "'"${version}"'"\' -i ~/.opam/satysfi/.opam-switch/overlay/${package}/opam
+  sed 's/^version: .*$/version: "'"${version}"'"/' -i ~/.opam/satysfi/.opam-switch/overlay/${package}/opam
   opam install ${package}
 }
 
