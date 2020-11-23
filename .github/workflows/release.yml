@@ -29,7 +29,7 @@ jobs:
           - context: slim
             tag: ${{ needs.info.outputs.version }}-slim
             tag-alias: slim
-          - dockerfile: Dockerfile.opam-bin
+          - context: opam-bin
             tag: ${{ needs.info.outputs.version }}-opam-bin
             tag-alias: opam-bin
     steps:
