@@ -21,7 +21,8 @@ jobs:
           echo "::set-output name=revision::$(git rev-parse --short HEAD)"
       - uses: docker/build-push-action@v2
         with:
-          file: Dockerfile.head
+          context: head
+          file: head/Dockerfile
           push: false
           load: true
           tags: amutake/satysfi:nightly
