@@ -19,9 +19,9 @@ jobs:
       - uses: actions/cache@v2
         with:
           path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ matrix.dockerfile }}-${{ github.sha }}
+          key: ${{ runner.os }}-buildx-${{ matrix.context }}-${{ github.sha }}
           restore-keys: |
-            ${{ runner.os }}-buildx-${{ matrix.dockerfile }}-
+            ${{ runner.os }}-buildx-${{ matrix.context }}-
       - id: args
         run: |
           echo "::set-output name=date::$(date --iso-8601=seconds)"
