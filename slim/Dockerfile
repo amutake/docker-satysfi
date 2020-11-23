@@ -11,7 +11,7 @@ RUN opam depext satysfi.${SATYSFI_VERSION} satysfi-dist.${SATYSFI_VERSION} satyr
 RUN opam install satysfi.${SATYSFI_VERSION} satysfi-dist.${SATYSFI_VERSION} satyrographos.${SATYROGRAPHOS_VERSION} \
   opam-file-format.2.1.0 # temporary fix. ref: https://github.com/ocaml/opam-file-format/issues/33
 RUN eval $(opam env) && \
-  satyrographos install -copy && \
+  satyrographos install --copy && \
   cp $(which satysfi) / && \
   cp $(which satyrographos) /
 
