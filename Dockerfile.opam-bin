@@ -15,14 +15,6 @@ ENV OPAMROOTISOK=true
 # always `yes`
 ENV OPAMYES=true
 
-# ref: https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#run
-RUN apt-get update && \
-    apt-get install -y curl patch unzip make m4 gcc git rsync && \
-    rm -rf /var/lib/apt/lists/*
-RUN curl -sL -o /usr/local/bin/opam https://github.com/ocaml/opam/releases/download/${OPAM_VERSION}/opam-${OPAM_VERSION}-$(uname -m)-linux
-RUN chmod a+x /usr/local/bin/opam
-RUN opam init --no-setup --disable-sandboxing --bare
-
 COPY opam-bin.sh /bin/init.sh
 RUN /bin/init.sh
 
