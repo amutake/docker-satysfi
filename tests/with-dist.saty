@@ -1,0 +1,8 @@
+@require: stdjareport
+
+document (|
+  title = {01-dist};
+  author = {satysfi-docker};
+|) '<
+  +p{A test case for satysfi-dist}
+>
