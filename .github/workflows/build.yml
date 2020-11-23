@@ -19,7 +19,7 @@ jobs:
             opam-available: false
           - context: head
             opam-available: false
-          - context: opam-bin
+          - context: opam-slim
             opam-available: true
     steps:
       - uses: actions/checkout@v2
