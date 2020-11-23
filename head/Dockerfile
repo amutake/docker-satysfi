@@ -28,7 +28,7 @@ RUN git describe --tags > /satysfi-revision
 
 # Copy binaries
 RUN eval $(opam env) && \
-  satyrographos install -copy && \
+  satyrographos install --copy && \
   cp $(which satysfi) / && \
   cp $(which satyrographos) /
 
