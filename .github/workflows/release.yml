@@ -29,6 +29,9 @@ jobs:
           - context: slim
             tag: ${{ needs.info.outputs.version }}-slim
             tag-alias: slim
+          - context: opam-slim
+            tag: ${{ needs.info.outputs.version }}-opam-slim
+            tag-alias: opam-slim
     steps:
       - uses: actions/checkout@v2
       - uses: docker/setup-buildx-action@v1
