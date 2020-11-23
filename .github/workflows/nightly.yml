@@ -30,6 +30,10 @@ jobs:
             BUILD_DATE=${{ steps.args.outputs.date }}
             VERSION=${{ steps.args.outputs.version }}
             REVISION=${{ steps.args.outputs.revision }}
+      - run: docker run --rm amutake/satysfi:ci satysfi --help
+      - run: docker run --rm amutake/satysfi:ci satyrographos help
+      - run: docker run --rm -v $(pwd)/tests:/satysfi amutake/satysfi:ci satysfi minimum.saty
+      - run: docker run --rm -v $(pwd)/tests:/satysfi amutake/satysfi:ci satysfi with-dist.saty
       - run: git clone git://github.com/gfngfn/SATySFi.git
       - run: docker run --rm -v $(pwd)/SATySFi/demo:/satysfi amutake/satysfi:nightly satysfi demo.saty
       - run: docker push amutake/satysfi:nightly
