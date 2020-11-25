@@ -23,8 +23,6 @@ jobs:
         with:
           context: head
           file: head/Dockerfile
-          # same as ubuntu image
-          platforms: linux/amd64,linux/arm/v7,linux/arm64,linux/ppc64le,linux/s390x
           push: false
           load: true
           tags: amutake/satysfi:nightly
@@ -32,6 +30,7 @@ jobs:
             BUILD_DATE=${{ steps.args.outputs.date }}
             VERSION=${{ steps.args.outputs.version }}
             REVISION=${{ steps.args.outputs.revision }}
+          platforms: linux/amd64,linux/arm64
       - run: docker run --rm amutake/satysfi:ci satysfi --help
       - run: docker run --rm amutake/satysfi:ci satyrographos help
       - run: docker run --rm -v $(pwd)/tests:/satysfi amutake/satysfi:ci satysfi minimum.saty

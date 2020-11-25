@@ -38,8 +38,6 @@ jobs:
         with:
           context: ${{ matrix.context }}
           file: ${{ matrix.context }}/Dockerfile
-          # same as ubuntu image
-          platforms: linux/amd64,linux/arm/v7,linux/arm64,linux/ppc64le,linux/s390x
           push: false
           load: true
           tags: amutake/satysfi:ci
@@ -47,6 +45,7 @@ jobs:
             BUILD_DATE=${{ steps.args.outputs.date }}
             VERSION=ci
             REVISION=${{ steps.args.outputs.revision }}
+          platforms: linux/amd64,linux/arm64
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
       # tests

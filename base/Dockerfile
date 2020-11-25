@@ -16,7 +16,8 @@ ENV OPAMYES=true
 # Setup opam & OCaml
 # cf. https://opam.ocaml.org/doc/Install.html#Binary-distribution
 RUN apt-get update && apt-get upgrade -y && apt-get install -y curl patch unzip make m4 gcc git rsync
-RUN curl -sL -o /usr/local/bin/opam https://github.com/ocaml/opam/releases/download/${OPAM_VERSION}/opam-${OPAM_VERSION}-$(uname -m)-linux
+# currently, x86_64 and arm64 are supported
+RUN curl -fsL -o /usr/local/bin/opam https://github.com/ocaml/opam/releases/download/${OPAM_VERSION}/opam-${OPAM_VERSION}-$([ $(uname -m) = aarch64 ] && echo arm64 || uname -m)-linux
 RUN chmod a+x /usr/local/bin/opam
 RUN opam init --no-setup --disable-sandboxing --compiler=${OCAML_VERSION}
 RUN opam install depext

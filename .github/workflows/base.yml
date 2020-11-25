@@ -21,7 +21,6 @@ jobs:
         with:
           context: base
           file: base/Dockerfile
-          # same as ubuntu image
-          platforms: linux/amd64,linux/arm/v7,linux/arm64,linux/ppc64le,linux/s390x
           push: true
           tags: ghcr.io/amutake/satysfi-base-image:${{ github.event.inputs.tag }}
+          platforms: linux/amd64,linux/arm64
