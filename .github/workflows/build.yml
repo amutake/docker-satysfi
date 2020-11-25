@@ -23,9 +23,8 @@ jobs:
             opam-available: true
     steps:
       - uses: actions/checkout@v2
+      - uses: docker/setup-qemu-action@v1
       - uses: docker/setup-buildx-action@v1
-        id: buildx
-      - run: echo ${{ steps.buildx.outputs.platforms }}
       - uses: actions/cache@v2
         with:
           path: /tmp/.buildx-cache
