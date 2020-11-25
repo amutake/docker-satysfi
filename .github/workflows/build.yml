@@ -40,7 +40,7 @@ jobs:
           context: ${{ matrix.context }}
           file: ${{ matrix.context }}/Dockerfile
           push: false
-          load: true
+          load: false
           tags: amutake/satysfi:ci
           build-args: |
             BUILD_DATE=${{ steps.args.outputs.date }}
@@ -49,7 +49,21 @@ jobs:
           platforms: linux/amd64,linux/arm64
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
-      # tests
+      # run tests using linux/amd64
+      # `load: true` does not support multi platforms
+      # ref: https://github.com/docker/buildx/issues/59
+      - uses: docker/build-push-action@v2
+        with:
+          context: ${{ matrix.context }}
+          file: ${{ matrix.context }}/Dockerfile
+          push: false
+          load: true
+          tags: amutake/satysfi:ci
+          build-args: |
+            BUILD_DATE=${{ steps.args.outputs.date }}
+            VERSION=ci
+            REVISION=${{ steps.args.outputs.revision }}
+          cache-from: type=local,src=/tmp/.buildx-cache
       - run: docker run --rm amutake/satysfi:ci satysfi --help
       - run: docker run --rm amutake/satysfi:ci satyrographos help
       - run: docker run --rm -v $(pwd)/tests:/satysfi amutake/satysfi:ci satysfi minimum.saty
