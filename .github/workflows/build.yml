@@ -52,5 +52,5 @@ jobs:
       - run: docker run --rm amutake/satysfi:ci satyrographos help
       - run: docker run --rm -v $(pwd)/tests:/satysfi amutake/satysfi:ci satysfi minimum.saty
       - run: docker run --rm -v $(pwd)/tests:/satysfi amutake/satysfi:ci satysfi with-dist.saty
-      - run: docker run --rm -v $(pwd)/tests:/satysfi amutake/satysfi:ci sh -c "opam install satysfi-base && satyrographos install && satysfi with-dist.saty"
+      - run: docker run --rm -v $(pwd)/tests:/satysfi amutake/satysfi:ci sh -c "opam install satysfi-base && satyrographos install && satysfi with-base.saty"
         if: ${{ matrix.opam-available }}
