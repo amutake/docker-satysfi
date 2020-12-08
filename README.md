@@ -1,4 +1,4 @@
-satysfi-docker
+docker-satysfi
 ==============
 
 [![Build Status](https://github.com/amutake/satysfi-docker/workflows/build/badge.svg)](https://github.com/amutake/satysfi-docker/actions?query=workflow%3Abuild)
