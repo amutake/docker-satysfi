@@ -12,8 +12,10 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        platform: [linux/amd64, linux/arm64]
-        type:
+        platform:
+          - linux/amd64
+          - linux/arm64
+        include:
           - context: .
             opam-available: true
           - context: slim
@@ -29,17 +31,17 @@ jobs:
       - uses: actions/cache@v2
         with:
           path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ matrix.type.context }}-${{ matrix.platform }}-${{ github.sha }}
+          key: ${{ runner.os }}-buildx-${{ matrix.context }}-${{ matrix.platform }}-${{ github.sha }}
           restore-keys: |
-            ${{ runner.os }}-buildx-${{ matrix.type.context }}-${{ matrix.platform }}-
+            ${{ runner.os }}-buildx-${{ matrix.context }}-${{ matrix.platform }}-
       - id: args
         run: |
           echo "::set-output name=date::$(date --iso-8601=seconds)"
           echo "::set-output name=revision::$(git rev-parse --short HEAD)"
       - uses: docker/build-push-action@v2
         with:
-          context: ${{ matrix.type.context }}
-          file: ${{ matrix.type.context }}/Dockerfile
+          context: ${{ matrix.context }}
+          file: ${{ matrix.context }}/Dockerfile
           push: false
           load: true
           tags: amutake/satysfi:ci
@@ -55,4 +57,4 @@ jobs:
       - run: docker run --rm -v $(pwd)/tests:/satysfi amutake/satysfi:ci satysfi minimum.saty
       - run: docker run --rm -v $(pwd)/tests:/satysfi amutake/satysfi:ci satysfi with-dist.saty
       - run: docker run --rm -v $(pwd)/tests:/satysfi amutake/satysfi:ci sh -c "opam install satysfi-base && satyrographos install && satysfi with-dist.saty"
-        if: ${{ matrix.type.opam-available }}
+        if: ${{ matrix.opam-available }}
