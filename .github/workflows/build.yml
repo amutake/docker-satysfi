@@ -12,18 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        platform:
-          - linux/amd64
-          - linux/arm64
-        include:
-          - context: .
-            opam-available: true
-          - context: slim
-            opam-available: false
-          - context: head
-            opam-available: false
-          - context: opam-slim
-            opam-available: true
+        context: [., slim, head, opam-slim]
+        platform: [linux/amd64, linux/arm64]
     steps:
       - uses: actions/checkout@v2
       - uses: docker/setup-qemu-action@v1
@@ -57,4 +47,4 @@ jobs:
       - run: docker run --rm -v $(pwd)/tests:/satysfi amutake/satysfi:ci satysfi minimum.saty
       - run: docker run --rm -v $(pwd)/tests:/satysfi amutake/satysfi:ci satysfi with-dist.saty
       - run: docker run --rm -v $(pwd)/tests:/satysfi amutake/satysfi:ci sh -c "opam install satysfi-base && satyrographos install && satysfi with-dist.saty"
-        if: ${{ matrix.opam-available }}
+        if: ${{ matrix.context == '.' || matrix.context == 'opam-slim' }}
