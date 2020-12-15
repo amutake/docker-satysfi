@@ -42,6 +42,7 @@ jobs:
           platforms: ${{ matrix.platform }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
+      # run tests
       - run: docker run --rm amutake/satysfi:ci satysfi --help
       - run: docker run --rm amutake/satysfi:ci satyrographos help
       - run: docker run --rm -v $(pwd)/tests:/satysfi amutake/satysfi:ci satysfi minimum.saty

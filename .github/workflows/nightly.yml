@@ -7,6 +7,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        platform: [linux/amd64, linux/arm64]
     steps:
       - uses: actions/checkout@v2
       - uses: docker/setup-qemu-action@v1
@@ -20,23 +23,6 @@ jobs:
           echo "::set-output name=date::$(date --iso-8601=seconds)"
           echo "::set-output name=version::$(date --iso-8601=date)-nightly"
           echo "::set-output name=revision::$(git rev-parse --short HEAD)"
-      # save build cache for multi platforms
-      - uses: docker/build-push-action@v2
-        with:
-          context: head
-          file: head/Dockerfile
-          push: false
-          load: false
-          tags: amutake/satysfi:nightly
-          build-args: |
-            BUILD_DATE=${{ steps.args.outputs.date }}
-            VERSION=${{ steps.args.outputs.version }}
-            REVISION=${{ steps.args.outputs.revision }}
-          platforms: linux/amd64,linux/arm64
-          cache-to: type=local,dest=/tmp/.buildx-cache
-      # run tests using linux/amd64
-      # `load: true` does not support multi platforms
-      # ref: https://github.com/docker/buildx/issues/59
       - uses: docker/build-push-action@v2
         with:
           context: head
@@ -48,24 +34,13 @@ jobs:
             BUILD_DATE=${{ steps.args.outputs.date }}
             VERSION=${{ steps.args.outputs.version }}
             REVISION=${{ steps.args.outputs.revision }}
-          platforms: linux/amd64
-          cache-from: type=local,src=/tmp/.buildx-cache
+          platforms: ${{ matrix.platform }}
+      # run tests
       - run: docker run --rm amutake/satysfi:nightly satysfi --help
       - run: docker run --rm amutake/satysfi:nightly satyrographos help
       - run: docker run --rm -v $(pwd)/tests:/satysfi amutake/satysfi:nightly satysfi minimum.saty
       - run: docker run --rm -v $(pwd)/tests:/satysfi amutake/satysfi:nightly satysfi with-dist.saty
       - run: git clone git://github.com/gfngfn/SATySFi.git
       - run: docker run --rm -v $(pwd)/SATySFi/demo:/satysfi amutake/satysfi:nightly satysfi demo.saty
-      # `push: true` supports multi platforms
-      - uses: docker/build-push-action@v2
-        with:
-          context: head
-          file: head/Dockerfile
-          push: true
-          tags: amutake/satysfi:nightly
-          build-args: |
-            BUILD_DATE=${{ steps.args.outputs.date }}
-            VERSION=${{ steps.args.outputs.version }}
-            REVISION=${{ steps.args.outputs.revision }}
-          platforms: linux/amd64,linux/arm64
-          cache-from: type=local,src=/tmp/.buildx-cache
+      # push
+      - run: docker push amutake/satysfi:nightly
