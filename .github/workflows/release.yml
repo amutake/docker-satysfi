@@ -11,6 +11,7 @@ jobs:
       revision: ${{ steps.info.outputs.revision }}
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - id: info
         run: |
           echo "::set-output name=date::$(date --iso-8601=seconds)"
