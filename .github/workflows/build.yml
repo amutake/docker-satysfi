@@ -13,7 +13,9 @@ jobs:
     strategy:
       matrix:
         context: [., slim, head, opam-slim]
-        platform: [linux/amd64, linux/arm64]
+        platform:
+          - linux/amd64
+          # - linux/arm64
     steps:
       - uses: actions/checkout@v2
       - uses: docker/setup-qemu-action@v1
