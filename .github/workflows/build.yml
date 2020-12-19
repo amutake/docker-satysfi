@@ -12,24 +12,20 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        include:
-          - context: .
-            opam-available: true
-          - context: slim
-            opam-available: false
-          - context: head
-            opam-available: false
-          - context: opam-slim
-            opam-available: true
+        context: [., slim, head, opam-slim]
+        platform:
+          - linux/amd64
+          # - linux/arm64
     steps:
       - uses: actions/checkout@v2
+      - uses: docker/setup-qemu-action@v1
       - uses: docker/setup-buildx-action@v1
       - uses: actions/cache@v2
         with:
           path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ matrix.context }}-${{ github.sha }}
+          key: ${{ runner.os }}-buildx-${{ matrix.context }}-${{ matrix.platform }}-${{ github.sha }}
           restore-keys: |
-            ${{ runner.os }}-buildx-${{ matrix.context }}-
+            ${{ runner.os }}-buildx-${{ matrix.context }}-${{ matrix.platform }}-
       - id: args
         run: |
           echo "::set-output name=date::$(date --iso-8601=seconds)"
@@ -45,12 +41,13 @@ jobs:
             BUILD_DATE=${{ steps.args.outputs.date }}
             VERSION=ci
             REVISION=${{ steps.args.outputs.revision }}
+          platforms: ${{ matrix.platform }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
-      # tests
+      # run tests
       - run: docker run --rm amutake/satysfi:ci satysfi --help
       - run: docker run --rm amutake/satysfi:ci satyrographos help
       - run: docker run --rm -v $(pwd)/tests:/satysfi amutake/satysfi:ci satysfi minimum.saty
       - run: docker run --rm -v $(pwd)/tests:/satysfi amutake/satysfi:ci satysfi with-dist.saty
       - run: docker run --rm -v $(pwd)/tests:/satysfi amutake/satysfi:ci sh -c "opam install satysfi-base && satyrographos install && satysfi with-base.saty"
-        if: ${{ matrix.opam-available }}
+        if: ${{ matrix.context == '.' || matrix.context == 'opam-slim' }}

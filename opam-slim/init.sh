@@ -10,7 +10,8 @@ apt-get update
 # - git: to add/update opam repositories
 # - rsync: to pin local-bin packages
 apt-get install -y curl patch unzip make m4 gcc git rsync
-curl -sL -o /usr/local/bin/opam https://github.com/ocaml/opam/releases/download/${OPAM_VERSION}/opam-${OPAM_VERSION}-$(uname -m)-linux
+# currently, x86_64 and arm64 are supported
+curl -fsL -o /usr/local/bin/opam https://github.com/ocaml/opam/releases/download/${OPAM_VERSION}/opam-${OPAM_VERSION}-$([ $(uname -m) = aarch64 ] && echo arm64 || uname -m)-linux
 chmod a+x /usr/local/bin/opam
 opam init --no-setup --disable-sandboxing --bare
 
