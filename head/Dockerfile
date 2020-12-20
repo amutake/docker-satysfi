@@ -8,8 +8,7 @@ RUN git clone git://github.com/na4zagin3/satyrographos.git /root/satyrographos
 WORKDIR /root/satyrographos
 RUN opam pin add --no-action --kind local satyrographos .
 RUN opam depext satyrographos
-RUN opam install satyrographos \
-  opam-file-format.2.1.0 # temporary fix. ref: https://github.com/ocaml/opam-file-format/issues/33
+RUN opam install satyrographos
 RUN git describe --tags > /satyrographos-revision
 
 # Install SATySFi
@@ -54,14 +53,14 @@ ARG BUILD_DATE
 ARG VERSION
 ARG REVISION
 LABEL org.opencontainers.image.created=$BUILD_DATE \
-      org.opencontainers.image.authors="amutake" \
-      org.opencontainers.image.url="https://github.com/amutake/satysfi-docker" \
-      org.opencontainers.image.documentation="https://github.com/amutake/satysfi-docker" \
-      org.opencontainers.image.source="https://github.com/amutake/satysfi-docker" \
-      org.opencontainers.image.version=$VERSION \
-      org.opencontainers.image.revision=$REVISION \
-      org.opencontainers.image.vendor="amutake" \
-      org.opencontainers.image.licenses="Apache-2.0" \
-      org.opencontainers.image.title="HEAD SATySFi and Satyrographos image without opam environment" \
-      org.opencontainers.image.description="HEAD SATySFi and Satyrographos image without opam environment"
+  org.opencontainers.image.authors="amutake" \
+  org.opencontainers.image.url="https://github.com/amutake/satysfi-docker" \
+  org.opencontainers.image.documentation="https://github.com/amutake/satysfi-docker" \
+  org.opencontainers.image.source="https://github.com/amutake/satysfi-docker" \
+  org.opencontainers.image.version=$VERSION \
+  org.opencontainers.image.revision=$REVISION \
+  org.opencontainers.image.vendor="amutake" \
+  org.opencontainers.image.licenses="Apache-2.0" \
+  org.opencontainers.image.title="HEAD SATySFi and Satyrographos image without opam environment" \
+  org.opencontainers.image.description="HEAD SATySFi and Satyrographos image without opam environment"
 # TODO: add `org.opencontainers.image.ref.name` (but what is this?)
