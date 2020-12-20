@@ -15,16 +15,15 @@ ENV OPAMYES=true
 
 # Setup opam & OCaml
 # cf. https://opam.ocaml.org/doc/Install.html#Binary-distribution
-RUN apt-get update && apt-get upgrade -y && apt-get install -y curl patch unzip make m4 gcc git rsync
+RUN apt-get update \
+	&& apt-get install -y curl patch unzip make m4 gcc git rsync pkg-config \
+	&& rm -rf /var/lib/apt/lists/*
 # currently, x86_64 and arm64 are supported
-RUN curl -fsL -o /usr/local/bin/opam https://github.com/ocaml/opam/releases/download/${OPAM_VERSION}/opam-${OPAM_VERSION}-$([ $(uname -m) = aarch64 ] && echo arm64 || uname -m)-linux
-RUN chmod a+x /usr/local/bin/opam
+RUN curl -fsL -o /usr/local/bin/opam https://github.com/ocaml/opam/releases/download/${OPAM_VERSION}/opam-${OPAM_VERSION}-$([ $(uname -m) = aarch64 ] && echo arm64 || uname -m)-linux \
+	&& chmod a+x /usr/local/bin/opam
 RUN opam init --no-setup --disable-sandboxing --compiler=${OCAML_VERSION}
 RUN opam install depext
 
 # Setup external repository
-RUN opam repository add satysfi-external https://github.com/gfngfn/satysfi-external-repo.git
-RUN opam repository add satyrographos-repo https://github.com/na4zagin3/satyrographos-repo.git
-
-# Setup document-writing-related packages
-RUN apt-get install -y fontconfig wget
+RUN opam repo add satysfi-external https://github.com/gfngfn/satysfi-external-repo.git
+RUN opam repo add satyrographos-repo https://github.com/na4zagin3/satyrographos-repo.git
