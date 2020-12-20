@@ -1,13 +1,24 @@
-FROM ubuntu:20.04
+FROM ghcr.io/amutake/satysfi-base-image:opam-2.0.7-ocaml-4.11.1 AS build-env
 
 # Versions
-ENV OCAML_VERSION=4.11.1
-ENV OPAM_VERSION=2.0.7
 ENV SATYSFI_VERSION=0.0.5-59-g32f2525
 ENV SATYROGRAPHOS_VERSION=0.0.2.8
 
-# avoid tzdata hung: https://serverfault.com/a/992421
-ENV DEBIAN_FRONTEND=noninteractive
+# Setup SATySFi & Satyrographos
+RUN apt-get update
+RUN opam update
+RUN opam depext satysfi.${SATYSFI_VERSION} satyrographos.${SATYROGRAPHOS_VERSION}
+RUN opam install satysfi.${SATYSFI_VERSION} satyrographos.${SATYROGRAPHOS_VERSION}
+RUN eval $(opam env) && cp $(which satysfi) / && cp $(which satyrographos) /
+
+# --
+
+FROM ubuntu:20.04
+
+# Versions
+ENV OPAM_VERSION=2.0.7
+ENV SATYSFI_VERSION=0.0.5-59-g32f2525
+ENV SATYROGRAPHOS_VERSION=0.0.2.8
 
 # opam's config vars
 # suppress `Running as root is not recommended` warning
@@ -15,9 +26,45 @@ ENV OPAMROOTISOK=true
 # always `yes`
 ENV OPAMYES=true
 
-# Run init script
-COPY init.sh /tmp/init.sh
-RUN /tmp/init.sh
+# Setup empty opam environment with satyrographos-repo
+RUN apt-get update \
+      # - curl: to get opam binary and opam libraries
+      # - patch, unzip: to init opam (required)
+      # - make: to build satyrographos packages
+      # - git: to add/update opam repositories
+      # - rsync: to pin local-bin packages
+      && apt-get install -y curl patch unzip make git rsync \
+      && rm -rf /var/lib/apt/lists/*
+RUN curl -fsL -o /usr/local/bin/opam https://github.com/ocaml/opam/releases/download/${OPAM_VERSION}/opam-${OPAM_VERSION}-$([ $(uname -m) = aarch64 ] && echo arm64 || uname -m)-linux \
+      && chmod a+x /usr/local/bin/opam
+RUN opam init --no-setup --disable-sandboxing --bare satyrographos-repo https://github.com/na4zagin3/satyrographos-repo.git
+RUN opam switch create satysfi --empty
+
+# Force-install satysfi and satyrographos
+# HACK: overwrites build, install, remove, and depends field empty.
+# This will be broken when the field order of satysfi's and satyrographos's the opam file is changed.
+RUN opam pin add satysfi $HOME/.opam/repo/satyrographos-repo/packages/satysfi/satysfi.${SATYSFI_VERSION} --no-action \
+      && sed -z 's/build.*\n]//' -i ~/.opam/satysfi/.opam-switch/overlay/satysfi/opam \
+      && opam install satysfi \
+      && opam clean -a -c -r --logs --unused-repositories
+# Because satyrographos is in default repo, add and remove default repo in a RUN to reduce image size.
+RUN opam repo add default https://opam.ocaml.org \
+      && opam pin add satyrographos $HOME/.opam/repo/default/packages/satyrographos/satyrographos.${SATYROGRAPHOS_VERSION} --no-action \
+      && sed -z 's/build.*\n]//' -i ~/.opam/satysfi/.opam-switch/overlay/satyrographos/opam \
+      && opam install satyrographos \
+      && opam repo remove default \
+      && opam clean -a -c -r --logs --unused-repositories
+
+# Copy binaries from build-env
+COPY --from=build-env /satysfi /usr/local/bin/satysfi
+COPY --from=build-env /satyrographos /usr/local/bin/satyrographos
+
+# Install satysfi-dist
+RUN opam install satysfi-dist.${SATYSFI_VERSION} \
+      && opam clean -a -c -r --logs --unused-repositories \
+      # HACK: sources directory contains duplicated dist files
+      && rm -rf $HOME/.opam/satysfi/.opam-switch/sources/satysfi-dist.${SATYSFI_VERSION}
+RUN satyrographos install
 
 # Setup build directory
 RUN mkdir /satysfi
