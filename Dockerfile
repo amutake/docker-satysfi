@@ -1,7 +1,7 @@
 FROM ghcr.io/amutake/satysfi-base-image:opam-2.0.7-ocaml-4.11.1
 
 # Versions
-ENV SATYSFI_VERSION=0.0.5-83-g360d941
+ENV SATYSFI_VERSION=0.0.6
 ENV SATYROGRAPHOS_VERSION=0.0.2.8
 
 # Setup SATySFi & Satyrographos
