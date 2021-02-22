@@ -1,7 +1,7 @@
 FROM ghcr.io/amutake/satysfi-base-image:opam-2.0.7-ocaml-4.11.1 AS build-env
 
 # Versions
-ENV SATYSFI_VERSION=0.0.6
+ENV SATYSFI_VERSION=0.0.6-25-g4083234
 ENV SATYROGRAPHOS_VERSION=0.0.2.8
 
 # Setup SATySFi & Satyrographos
@@ -17,7 +17,7 @@ FROM ubuntu:20.04
 
 # Versions
 ENV OPAM_VERSION=2.0.7
-ENV SATYSFI_VERSION=0.0.6
+ENV SATYSFI_VERSION=0.0.6-25-g4083234
 ENV SATYROGRAPHOS_VERSION=0.0.2.8
 
 # opam's config vars
