@@ -17,6 +17,7 @@ RUN git describe --tags > /satyrographos-revision
 # cf. https://github.com/amutake/satysfi-docker/pull/17
 RUN git clone git://github.com/gfngfn/SATySFi.git /root/SATySFi
 WORKDIR /root/SATySFi
+RUN sed -i -e 's!"omd"!"omd" {< "2.0.0~"}!' satysfi.opam
 RUN opam pin add --no-action --kind local satysfi .
 RUN opam depext satysfi
 RUN opam install satysfi
