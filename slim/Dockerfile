@@ -8,7 +8,8 @@ ENV SATYROGRAPHOS_VERSION=0.0.2.8
 RUN apt-get update
 RUN opam update
 RUN opam depext satysfi.${SATYSFI_VERSION} satysfi-dist.${SATYSFI_VERSION} satyrographos.${SATYROGRAPHOS_VERSION}
-RUN opam install satysfi.${SATYSFI_VERSION} satysfi-dist.${SATYSFI_VERSION} satyrographos.${SATYROGRAPHOS_VERSION}
+RUN opam install satysfi.${SATYSFI_VERSION} satysfi-dist.${SATYSFI_VERSION} satyrographos.${SATYROGRAPHOS_VERSION} \
+  "omd<2.0.0~" # tmp
 RUN eval $(opam env) && \
   satyrographos install --copy && \
   cp $(which satysfi) / && \

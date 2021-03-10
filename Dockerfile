@@ -9,7 +9,8 @@ RUN opam update
 RUN apt-get update \
   && opam depext satysfi.${SATYSFI_VERSION} satysfi-dist.${SATYSFI_VERSION} satyrographos.${SATYROGRAPHOS_VERSION} \
   && rm -rf /var/lib/apt/lists/*
-RUN opam install satysfi.${SATYSFI_VERSION} satysfi-dist.${SATYSFI_VERSION} satyrographos.${SATYROGRAPHOS_VERSION}
+RUN opam install satysfi.${SATYSFI_VERSION} satysfi-dist.${SATYSFI_VERSION} satyrographos.${SATYROGRAPHOS_VERSION} \
+  "omd<2.0.0~" # tmp
 RUN opam exec -- satyrographos install
 
 # Setup build directory
