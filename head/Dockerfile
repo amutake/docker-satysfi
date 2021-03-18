@@ -19,7 +19,7 @@ RUN git clone git://github.com/gfngfn/SATySFi.git /root/SATySFi
 WORKDIR /root/SATySFi
 RUN opam pin add --no-action --kind local satysfi .
 RUN opam depext satysfi
-RUN opam install satysfi "omd<2.0.0~"
+RUN opam install satysfi
 RUN ./download-fonts.sh
 RUN sed -i -e "s!/usr/local/share!$(opam var share)!" install-libs.sh
 RUN ./install-libs.sh $(opam var share)/satysfi

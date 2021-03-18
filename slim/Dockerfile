@@ -1,15 +1,14 @@
 FROM ghcr.io/amutake/satysfi-base-image:opam-2.0.7-ocaml-4.11.1 AS build-env
 
 # Versions
-ENV SATYSFI_VERSION=0.0.6-25-g4083234
-ENV SATYROGRAPHOS_VERSION=0.0.2.8
+ENV SATYSFI_VERSION=0.0.6-32-g9dbd61d
+ENV SATYROGRAPHOS_VERSION=0.0.2.10
 
 # Setup SATySFi & Satyrographos
 RUN apt-get update
 RUN opam update
 RUN opam depext satysfi.${SATYSFI_VERSION} satysfi-dist.${SATYSFI_VERSION} satyrographos.${SATYROGRAPHOS_VERSION}
-RUN opam install satysfi.${SATYSFI_VERSION} satysfi-dist.${SATYSFI_VERSION} satyrographos.${SATYROGRAPHOS_VERSION} \
-  "omd<2.0.0~" # tmp
+RUN opam install satysfi.${SATYSFI_VERSION} satysfi-dist.${SATYSFI_VERSION} satyrographos.${SATYROGRAPHOS_VERSION}
 RUN eval $(opam env) && \
   satyrographos install --copy && \
   cp $(which satysfi) / && \
