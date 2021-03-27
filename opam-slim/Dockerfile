@@ -42,7 +42,7 @@ RUN opam switch create satysfi --empty
 
 # Force-install satysfi and satyrographos
 # HACK: overwrites build, install, remove, and depends field empty.
-# This will be broken when the field order of satysfi's and satyrographos's the opam file is changed.
+# This will be broken when the field order of satysfi/satyrographos's opam file is changed.
 RUN opam pin add satysfi $HOME/.opam/repo/satyrographos-repo/packages/satysfi/satysfi.${SATYSFI_VERSION} --no-action \
       && sed -z 's/build.*\n]//' -i ~/.opam/satysfi/.opam-switch/overlay/satysfi/opam \
       && opam install satysfi \
@@ -76,9 +76,9 @@ ARG VERSION
 ARG REVISION
 LABEL org.opencontainers.image.created=$BUILD_DATE \
       org.opencontainers.image.authors="amutake" \
-      org.opencontainers.image.url="https://github.com/amutake/satysfi-docker" \
-      org.opencontainers.image.documentation="https://github.com/amutake/satysfi-docker" \
-      org.opencontainers.image.source="https://github.com/amutake/satysfi-docker" \
+      org.opencontainers.image.url="https://github.com/amutake/docker-satysfi" \
+      org.opencontainers.image.documentation="https://github.com/amutake/docker-satysfi" \
+      org.opencontainers.image.source="https://github.com/amutake/docker-satysfi" \
       org.opencontainers.image.version=$VERSION \
       org.opencontainers.image.revision=$REVISION \
       org.opencontainers.image.vendor="amutake" \

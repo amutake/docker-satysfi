@@ -26,5 +26,5 @@ let document bt =
     bb
 in
 document '<
-  +p{The minimum test case for satysfi-docker}
+  +p{The minimum test case for docker-satysfi}
 >
