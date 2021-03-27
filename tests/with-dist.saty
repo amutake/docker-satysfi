@@ -4,5 +4,5 @@ document (|
   title = {with-dist};
   author = {satysfi-docker};
 |) '<
-  +p{A test case for satysfi-dist}
+  +p{A test case using satysfi-dist}
 >

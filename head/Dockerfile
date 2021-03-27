@@ -14,7 +14,7 @@ RUN git describe --tags > /satyrographos-revision
 # Install SATySFi
 # SATySFi (satysfi-dist) installation must be after satyrographos installation
 # because $(opam var share)/satysfi is removed due to satysfi reinstallation caused by satyrographos.
-# cf. https://github.com/amutake/satysfi-docker/pull/17
+# cf. https://github.com/amutake/docker-satysfi/pull/17
 RUN git clone git://github.com/gfngfn/SATySFi.git /root/SATySFi
 WORKDIR /root/SATySFi
 RUN opam pin add --no-action --kind local satysfi .
@@ -54,9 +54,9 @@ ARG VERSION
 ARG REVISION
 LABEL org.opencontainers.image.created=$BUILD_DATE \
   org.opencontainers.image.authors="amutake" \
-  org.opencontainers.image.url="https://github.com/amutake/satysfi-docker" \
-  org.opencontainers.image.documentation="https://github.com/amutake/satysfi-docker" \
-  org.opencontainers.image.source="https://github.com/amutake/satysfi-docker" \
+  org.opencontainers.image.url="https://github.com/amutake/docker-satysfi" \
+  org.opencontainers.image.documentation="https://github.com/amutake/docker-satysfi" \
+  org.opencontainers.image.source="https://github.com/amutake/docker-satysfi" \
   org.opencontainers.image.version=$VERSION \
   org.opencontainers.image.revision=$REVISION \
   org.opencontainers.image.vendor="amutake" \

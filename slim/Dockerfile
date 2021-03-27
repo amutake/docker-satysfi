@@ -33,9 +33,9 @@ ARG VERSION
 ARG REVISION
 LABEL org.opencontainers.image.created=$BUILD_DATE \
   org.opencontainers.image.authors="amutake" \
-  org.opencontainers.image.url="https://github.com/amutake/satysfi-docker" \
-  org.opencontainers.image.documentation="https://github.com/amutake/satysfi-docker" \
-  org.opencontainers.image.source="https://github.com/amutake/satysfi-docker" \
+  org.opencontainers.image.url="https://github.com/amutake/docker-satysfi" \
+  org.opencontainers.image.documentation="https://github.com/amutake/docker-satysfi" \
+  org.opencontainers.image.source="https://github.com/amutake/docker-satysfi" \
   org.opencontainers.image.version=$VERSION \
   org.opencontainers.image.revision=$REVISION \
   org.opencontainers.image.vendor="amutake" \
