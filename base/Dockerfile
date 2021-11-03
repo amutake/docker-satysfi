@@ -1,8 +1,8 @@
 FROM ubuntu:20.04
 
 # Versions
-ENV OCAML_VERSION=4.11.1
-ENV OPAM_VERSION=2.0.7
+ENV OCAML_VERSION=4.13.1
+ENV OPAM_VERSION=2.1.0
 
 # avoid tzdata hung: https://serverfault.com/a/992421
 ENV DEBIAN_FRONTEND=noninteractive
