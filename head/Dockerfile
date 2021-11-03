@@ -4,7 +4,7 @@ RUN apt-get update
 RUN opam update
 
 # Install Satyrographos
-RUN git clone git://github.com/na4zagin3/satyrographos.git /root/satyrographos
+RUN git clone https://github.com/na4zagin3/satyrographos.git /root/satyrographos
 WORKDIR /root/satyrographos
 RUN opam pin add --no-action --kind local satyrographos .
 RUN opam depext satyrographos
@@ -15,7 +15,7 @@ RUN git describe --tags > /satyrographos-revision
 # SATySFi (satysfi-dist) installation must be after satyrographos installation
 # because $(opam var share)/satysfi is removed due to satysfi reinstallation caused by satyrographos.
 # cf. https://github.com/amutake/docker-satysfi/pull/17
-RUN git clone git://github.com/gfngfn/SATySFi.git /root/SATySFi
+RUN git clone https://github.com/gfngfn/SATySFi.git /root/SATySFi
 WORKDIR /root/SATySFi
 RUN opam pin add --no-action --kind local satysfi .
 RUN opam depext satysfi

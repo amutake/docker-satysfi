@@ -42,7 +42,7 @@ jobs:
       - run: docker run --rm amutake/satysfi:nightly satyrographos help
       - run: docker run --rm -v $(pwd)/tests:/satysfi amutake/satysfi:nightly satysfi minimum.saty
       - run: docker run --rm -v $(pwd)/tests:/satysfi amutake/satysfi:nightly satysfi with-dist.saty
-      - run: git clone git://github.com/gfngfn/SATySFi.git
+      - run: git clone https://github.com/gfngfn/SATySFi.git
       - run: docker run --rm -v $(pwd)/SATySFi/demo:/satysfi amutake/satysfi:nightly satysfi demo.saty
       # push
       - run: docker push amutake/satysfi:nightly
