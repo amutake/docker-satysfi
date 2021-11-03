@@ -1,4 +1,4 @@
-FROM ghcr.io/amutake/satysfi-base-image:opam-2.0.7-ocaml-4.11.1 AS build-env
+FROM ghcr.io/amutake/satysfi-base-image:opam-2.1.0-ocaml-4.12.1 AS build-env
 
 RUN apt-get update
 RUN opam update
@@ -7,7 +7,6 @@ RUN opam update
 RUN git clone https://github.com/na4zagin3/satyrographos.git /root/satyrographos
 WORKDIR /root/satyrographos
 RUN opam pin add --no-action --kind local satyrographos .
-RUN opam depext satyrographos
 RUN opam install satyrographos
 RUN git describe --tags > /satyrographos-revision
 
@@ -18,9 +17,10 @@ RUN git describe --tags > /satyrographos-revision
 RUN git clone https://github.com/gfngfn/SATySFi.git /root/SATySFi
 WORKDIR /root/SATySFi
 RUN opam pin add --no-action --kind local satysfi .
-RUN opam depext satysfi
 RUN opam install satysfi
-RUN ./download-fonts.sh
+RUN apt-get update \
+  && apt-get install -y wget \
+  && ./download-fonts.sh
 RUN sed -i -e "s!/usr/local/share!$(opam var share)!" install-libs.sh
 RUN ./install-libs.sh $(opam var share)/satysfi
 RUN git describe --tags > /satysfi-revision
