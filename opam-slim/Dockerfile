@@ -15,7 +15,7 @@ RUN eval $(opam env) && cp $(which satysfi) / && cp $(which satyrographos) /
 FROM ubuntu:20.04
 
 # Versions
-ENV OPAM_VERSION=2.1.0
+ENV OPAM_VERSION=2.0.7
 ENV SATYSFI_VERSION=0.0.7
 ENV SATYROGRAPHOS_VERSION=0.0.2.11
 
