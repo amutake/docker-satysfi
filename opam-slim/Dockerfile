@@ -36,8 +36,7 @@ RUN apt-get update \
       && rm -rf /var/lib/apt/lists/*
 RUN curl -fsL -o /usr/local/bin/opam https://github.com/ocaml/opam/releases/download/${OPAM_VERSION}/opam-${OPAM_VERSION}-$([ $(uname -m) = aarch64 ] && echo arm64 || uname -m)-linux \
       && chmod a+x /usr/local/bin/opam
-RUN opam init --no-setup --disable-sandboxing --bare satyrographos-repo https://github.com/na4zagin3/satyrographos-repo.git \
-      && rm $HOME/.opam/repo/satyrographos-repo.tar.gz
+RUN opam init --no-setup --disable-sandboxing --bare satyrographos-repo https://github.com/na4zagin3/satyrographos-repo.git
 RUN opam switch create satysfi --empty
 
 # Force-install satysfi and satyrographos
@@ -62,10 +61,8 @@ COPY --from=build-env /satysfi /usr/local/bin/satysfi
 COPY --from=build-env /satyrographos /usr/local/bin/satyrographos
 
 # Install satysfi-dist
-RUN opam update \
-      && opam install satysfi-dist.${SATYSFI_VERSION} \
+RUN opam install satysfi-dist.${SATYSFI_VERSION} \
       && opam clean -a -c -r --logs --unused-repositories \
-      && rm $HOME/.opam/repo/satyrographos-repo.tar.gz \
       # HACK: sources directory contains duplicated dist files
       && rm -rf $HOME/.opam/satysfi/.opam-switch/sources/satysfi-dist.${SATYSFI_VERSION}
 RUN satyrographos install
