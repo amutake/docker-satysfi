@@ -1,4 +1,4 @@
-FROM ghcr.io/amutake/satysfi-base-image:opam-2.1.0-ocaml-4.12.1 AS build-env
+FROM ghcr.io/amutake/satysfi-base-image:opam-2.1.3-ocaml-4.14.0 AS build-env
 
 # Versions
 ENV SATYSFI_VERSION=0.0.7
@@ -12,10 +12,10 @@ RUN eval $(opam env) && cp $(which satysfi) / && cp $(which satyrographos) /
 
 # --
 
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
 # Versions
-ENV OPAM_VERSION=2.0.7
+ENV OPAM_VERSION=2.1.3
 ENV SATYSFI_VERSION=0.0.7
 ENV SATYROGRAPHOS_VERSION=0.0.2.11
 
@@ -42,17 +42,19 @@ RUN opam switch create satysfi --empty
 # Force-install satysfi and satyrographos
 # HACK: overwrites build, install, remove, and depends field empty.
 # This will be broken when the field order of satysfi/satyrographos's opam file is changed.
-RUN opam pin add satysfi.${SATYSFI_VERSION} $HOME/.opam/repo/satyrographos-repo/packages/satysfi/satysfi.${SATYSFI_VERSION} --no-action \
+RUN git clone --depth=1 https://github.com/na4zagin3/satyrographos-repo.git \
+      && opam pin add satysfi.${SATYSFI_VERSION} satyrographos-repo/packages/satysfi/satysfi.${SATYSFI_VERSION} --no-action \
       && sed -z 's/build.*\n]//' -i ~/.opam/satysfi/.opam-switch/overlay/satysfi/opam \
       && opam install satysfi.${SATYSFI_VERSION} \
-      && opam clean -a -c -r --logs --unused-repositories
+      && opam clean -a -c -r --logs --unused-repositories \
+      && rm -rf satyrographos-repo
 # Because satyrographos is in default repo, add and remove default repo in a RUN to reduce image size.
-RUN opam repo add default https://opam.ocaml.org \
-      && opam pin add satyrographos.${SATYROGRAPHOS_VERSION} $HOME/.opam/repo/default/packages/satyrographos/satyrographos.${SATYROGRAPHOS_VERSION} --no-action \
+RUN git clone --depth=1 https://github.com/ocaml/opam-repository.git \
+      && opam pin add satyrographos.${SATYROGRAPHOS_VERSION} opam-repository/packages/satyrographos/satyrographos.${SATYROGRAPHOS_VERSION} --no-action \
       && sed -z 's/build.*\n]//' -i ~/.opam/satysfi/.opam-switch/overlay/satyrographos/opam \
       && opam install satyrographos.${SATYROGRAPHOS_VERSION} \
-      && opam repo remove default \
-      && opam clean -a -c -r --logs --unused-repositories
+      && opam clean -a -c -r --logs --unused-repositories \
+      && rm -rf opam-repository
 
 # Copy binaries from build-env
 COPY --from=build-env /satysfi /usr/local/bin/satysfi

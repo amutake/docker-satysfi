@@ -1,4 +1,4 @@
-FROM ghcr.io/amutake/satysfi-base-image:opam-2.1.0-ocaml-4.12.1
+FROM ghcr.io/amutake/satysfi-base-image:opam-2.1.3-ocaml-4.14.0
 
 # Versions
 ENV SATYSFI_VERSION=0.0.7
