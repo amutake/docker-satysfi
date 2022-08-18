@@ -44,6 +44,8 @@ jobs:
           platforms: ${{ matrix.platform }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
+      # the size represents uncompressed. see https://gist.github.com/MichaelSimons/fb588539dcefd9b5fdf45ba04c302db6
+      - run: docker images
       # run tests
       - run: docker run --rm amutake/satysfi:ci satysfi --help
       - run: docker run --rm amutake/satysfi:ci satyrographos help
