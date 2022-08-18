@@ -44,13 +44,13 @@ RUN opam switch create satysfi --empty
 # This will be broken when the field order of satysfi/satyrographos's opam file is changed.
 RUN opam pin add satysfi $HOME/.opam/repo/satyrographos-repo/packages/satysfi/satysfi.${SATYSFI_VERSION} --no-action \
       && sed -z 's/build.*\n]//' -i ~/.opam/satysfi/.opam-switch/overlay/satysfi/opam \
-      && opam install satysfi \
+      && opam install satysfi.${SATYSFI_VERSION} \
       && opam clean -a -c -r --logs --unused-repositories
 # Because satyrographos is in default repo, add and remove default repo in a RUN to reduce image size.
 RUN opam repo add default https://opam.ocaml.org \
       && opam pin add satyrographos $HOME/.opam/repo/default/packages/satyrographos/satyrographos.${SATYROGRAPHOS_VERSION} --no-action \
       && sed -z 's/build.*\n]//' -i ~/.opam/satysfi/.opam-switch/overlay/satyrographos/opam \
-      && opam install satyrographos \
+      && opam install satyrographos.${SATYROGRAPHOS_VERSION} \
       && opam repo remove default \
       && opam clean -a -c -r --logs --unused-repositories
 
