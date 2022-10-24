@@ -11,6 +11,8 @@ RUN sed -i -e 's/"yojson"/"yojson" {< "2.0"}/g' satyrographos.opam
 RUN opam pin add --no-action --kind local satyrographos .
 RUN opam install satyrographos
 RUN git describe --tags > /satyrographos-revision
+# temporary fix
+RUN eval $(opam env) && cp $(which satyrographos) /bin/
 
 # Install SATySFi
 # SATySFi (satysfi-dist) installation must be after satyrographos installation
