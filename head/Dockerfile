@@ -52,7 +52,7 @@ RUN date --iso-8601=seconds > /build-date
 RUN mkdir /satysfi
 WORKDIR /satysfi
 
-# OCI Annotations (https://github.com/opencontainers/image-spec/blob/master/annotations.md)
+# OCI Annotations (https://github.com/opencontainers/image-spec/blob/main/annotations.md)
 ARG BUILD_DATE
 ARG VERSION
 ARG REVISION
@@ -66,5 +66,5 @@ LABEL org.opencontainers.image.created=$BUILD_DATE \
   org.opencontainers.image.vendor="amutake" \
   org.opencontainers.image.licenses="Apache-2.0" \
   org.opencontainers.image.title="HEAD SATySFi and Satyrographos image without opam environment" \
-  org.opencontainers.image.description="HEAD SATySFi and Satyrographos image without opam environment"
-# TODO: add `org.opencontainers.image.ref.name` (but what is this?)
+  org.opencontainers.image.description="HEAD SATySFi and Satyrographos image without opam environment" \
+  org.opencontainers.image.ref.name="amutake/satysfi:nightly"
