@@ -15,7 +15,7 @@ RUN opam exec -- satyrographos install
 RUN mkdir /satysfi
 WORKDIR /satysfi
 
-# OCI Annotations (https://github.com/opencontainers/image-spec/blob/master/annotations.md)
+# OCI Annotations (https://github.com/opencontainers/image-spec/blob/main/annotations.md)
 ARG BUILD_DATE
 ARG VERSION
 ARG REVISION
@@ -29,8 +29,8 @@ LABEL org.opencontainers.image.created=$BUILD_DATE \
   org.opencontainers.image.vendor="amutake" \
   org.opencontainers.image.licenses="Apache-2.0" \
   org.opencontainers.image.title="SATySFi and Satyrographos image with full opam environment" \
-  org.opencontainers.image.description="SATySFi and Satyrographos image with full opam environment"
-# TODO: add `org.opencontainers.image.ref.name` (but what is this?)
+  org.opencontainers.image.description="SATySFi and Satyrographos image with full opam environment" \
+  org.opencontainers.image.ref.name="amutake/satysfi:${VERSION}"
 
 # Setup entrypoint
 ENTRYPOINT ["opam", "exec", "--"]
