@@ -42,7 +42,7 @@ jobs:
           key: ${{ runner.os }}-buildx-${{ matrix.context }}-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-buildx-${{ matrix.context }}-
-      - uses: docker/login-action@v1
+      - uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
