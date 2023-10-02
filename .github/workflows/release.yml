@@ -11,7 +11,7 @@ jobs:
       revision: ${{ steps.info.outputs.revision }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - id: info
         run: |
           echo "date=$(date --iso-8601=seconds)" >> $GITHUB_OUTPUT
@@ -33,7 +33,7 @@ jobs:
             tag: ${{ needs.info.outputs.version }}-opam-slim
             tag-alias: opam-slim
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: docker/setup-qemu-action@v1
       - uses: docker/setup-buildx-action@v1
       - uses: actions/cache@v2
