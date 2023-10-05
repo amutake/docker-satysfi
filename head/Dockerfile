@@ -6,8 +6,6 @@ RUN opam update
 # Install Satyrographos
 RUN git clone https://github.com/na4zagin3/satyrographos.git /root/satyrographos
 WORKDIR /root/satyrographos
-# temporary fix
-RUN sed -i -e 's/"yojson"/"yojson" {< "2.0"}/g' satyrographos.opam
 RUN opam pin add --no-action --kind local satyrographos .
 RUN opam install satyrographos
 RUN git describe --tags > /satyrographos-revision
