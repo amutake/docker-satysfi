@@ -27,8 +27,8 @@ jobs:
           echo "revision=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
       - uses: docker/build-push-action@v5
         with:
-          context: head
-          file: head/Dockerfile
+          context: branch
+          file: branch/Dockerfile
           push: false
           load: true
           tags: amutake/satysfi:nightly
@@ -36,6 +36,8 @@ jobs:
             BUILD_DATE=${{ steps.args.outputs.date }}
             VERSION=${{ steps.args.outputs.version }}
             REVISION=${{ steps.args.outputs.revision }}
+            BRANCH=master
+            IMAGE_TAG=nightly
           platforms: ${{ matrix.platform }}
       # run tests
       - run: docker run --rm amutake/satysfi:nightly satysfi --help

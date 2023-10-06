@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        context: [., slim, head, opam-slim, dev-0-1-0]
+        context: [., slim, opam-slim, branch]
         platform:
           - linux/amd64
           # - linux/arm64
@@ -41,6 +41,7 @@ jobs:
             BUILD_DATE=${{ steps.args.outputs.date }}
             VERSION=ci
             REVISION=${{ steps.args.outputs.revision }}
+            IMAGE_TAG=ci
           platforms: ${{ matrix.platform }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
