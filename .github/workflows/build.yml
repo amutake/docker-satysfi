@@ -41,6 +41,8 @@ jobs:
             BUILD_DATE=${{ steps.args.outputs.date }}
             VERSION=ci
             REVISION=${{ steps.args.outputs.revision }}
+            # only 'branch' context
+            BRANCH=master
             IMAGE_TAG=ci
           platforms: ${{ matrix.platform }}
           cache-from: type=local,src=/tmp/.buildx-cache
