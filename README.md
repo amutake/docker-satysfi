@@ -12,9 +12,6 @@ Images are available at [Docker Hub - amutake/satysfi](https://hub.docker.com/r/
 | `latest`, `0.0.10`              | ![badge](https://img.shields.io/docker/image-size/amutake/satysfi/latest?color=black&label=%20&logo=docker)          | `0.0.10` | `0.0.2.13`            | o             | `amd64`, `arm64` |                              |
 | `slim`, `0.0.10-slim`           | ![badge](https://img.shields.io/docker/image-size/amutake/satysfi/slim?color=black&label=%20&logo=docker)            | `0.0.10` | `0.0.2.13`            | x             | `amd64`, `arm64` |                              |
 | `opam-slim`, `0.0.10-opam-slim` | ![badge](https://img.shields.io/docker/image-size/amutake/satysfi/opam-slim?color=black&label=%20&logo=docker)       | `0.0.10` | `0.0.2.13`            | o (minimized) | `amd64`, `arm64` | **EXPERIMENTAL**             |
-| `0.0.9-6-ge0304803`              | ![badge](https://img.shields.io/docker/image-size/amutake/satysfi/latest?color=black&label=%20&logo=docker)          | `0.0.9-6-ge0304803` | `0.0.2.13`            | o             | `amd64`, `arm64` |                              |
-| `0.0.9-6-ge0304803-slim`           | ![badge](https://img.shields.io/docker/image-size/amutake/satysfi/slim?color=black&label=%20&logo=docker)            | `0.0.9-6-ge0304803` | `0.0.2.13`            | x             | `amd64`, `arm64` |                              |
-| `0.0.9-6-ge0304803-opam-slim` | ![badge](https://img.shields.io/docker/image-size/amutake/satysfi/opam-slim?color=black&label=%20&logo=docker)       | `0.0.9-6-ge0304803` | `0.0.2.13`            | o (minimized) | `amd64`, `arm64` | **EXPERIMENTAL**             |
 | `nightly`                                  | ![badge](https://img.shields.io/docker/image-size/amutake/satysfi/nightly?color=black&label=%20&logo=docker)         | master branch       | master branch         | x             | `amd64`          | built at 00:00 UTC every day |
 
 ## How to use
