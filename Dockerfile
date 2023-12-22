@@ -7,7 +7,8 @@ ENV SATYROGRAPHOS_VERSION=0.0.2.13
 # Setup SATySFi & Satyrographos
 RUN opam update
 RUN apt-get update \
-  && opam install satysfi.${SATYSFI_VERSION} satysfi-dist.${SATYSFI_VERSION} satyrographos.${SATYROGRAPHOS_VERSION} \
+  # temporary fix https://x.com/puripuri2100/status/1737857311866269876
+  && opam install camlimages.5.0.4-1 satysfi.${SATYSFI_VERSION} satysfi-dist.${SATYSFI_VERSION} satyrographos.${SATYROGRAPHOS_VERSION} \
   && rm -rf /var/lib/apt/lists/*
 RUN opam exec -- satyrographos install
 
