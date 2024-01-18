@@ -30,8 +30,8 @@ jobs:
           echo "revision=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
       - uses: docker/build-push-action@v5
         with:
-          context: branch
-          file: branch/Dockerfile
+          context: branch-saphe
+          file: branch-saphe/Dockerfile
           push: false
           load: true
           tags: amutake/satysfi:branch-${{ github.event.inputs.branch }}
