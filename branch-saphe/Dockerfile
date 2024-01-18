@@ -1,6 +1,6 @@
 FROM ghcr.io/amutake/satysfi-base-image:opam-2.1.3-ocaml-4.14.0 AS build-env
 
-ARG REVISION=44ff21be6ffb3675512f0599d5d139809f7c5786
+ARG BRANCH=dev-0-1-0-separate-saphe-from-satysfi
 
 # Install system dependencies
 RUN apt-get update
@@ -9,7 +9,7 @@ RUN apt-get install -y autoconf
 # Install SATySFi and Saphe
 RUN git clone https://github.com/gfngfn/SATySFi.git /root/SATySFi
 WORKDIR /root/SATySFi
-RUN git checkout ${REVISION}
+RUN git checkout ${BRANCH}
 RUN opam pin add --no-action --kind local satysfi-util.dev .
 RUN opam pin add --no-action --kind local satysfi-common.dev .
 RUN opam pin add --no-action --kind local saphe.dev .
@@ -65,6 +65,6 @@ LABEL org.opencontainers.image.created=$BUILD_DATE \
     org.opencontainers.image.revision=$REVISION \
     org.opencontainers.image.vendor="amutake" \
     org.opencontainers.image.licenses="Apache-2.0" \
-    org.opencontainers.image.title="SATySFi and Saphe" \
-    org.opencontainers.image.description="SATySFi and Saphe" \
+    org.opencontainers.image.title="SATySFi and Saphe (${BRANCH})" \
+    org.opencontainers.image.description="SATySFi and Saphe (${BRANCH})" \
     org.opencontainers.image.ref.name="amutake/satysfi:${IMAGE_TAG}"

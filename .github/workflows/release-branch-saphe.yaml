@@ -1,0 +1,51 @@
+name: release-branch-saphe
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: "Branch name"
+        required: true
+        default: "dev-0-1-0-separate-saphe-from-satysfi"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        platform:
+          - linux/amd64
+          # - linux/arm64
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
+      - id: args
+        run: |
+          echo "date=$(date --iso-8601=seconds)" >> $GITHUB_OUTPUT
+          echo "version=$(date --iso-8601=date)-${{ github.event.inputs.branch }}" >> $GITHUB_OUTPUT
+          echo "revision=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+      - uses: docker/build-push-action@v5
+        with:
+          context: branch
+          file: branch/Dockerfile
+          push: false
+          load: true
+          tags: amutake/satysfi:branch-${{ github.event.inputs.branch }}
+          build-args: |
+            BUILD_DATE=${{ steps.args.outputs.date }}
+            VERSION=${{ steps.args.outputs.version }}
+            REVISION=${{ steps.args.outputs.revision }}
+            BRANCH=${{ github.event.inputs.branch }}
+            IMAGE_TAG=branch-${{ github.event.inputs.branch }}
+          platforms: ${{ matrix.platform }}
+      # run tests
+      - run: docker run --rm amutake/satysfi:branch-${{ github.event.inputs.branch }} satysfi --help
+      - run: docker run --rm amutake/satysfi:branch-${{ github.event.inputs.branch }} saphe --help
+      - run: git clone --branch ${{ github.event.inputs.branch }} https://github.com/gfngfn/SATySFi.git
+      - run: docker run --rm -v $(pwd)/SATySFi/demo:/satysfi amutake/satysfi:branch-${{ github.event.inputs.branch }} sh -c "saphe solve demo.saty && saphe build demo.saty"
+      # push
+      - run: docker push amutake/satysfi:branch-${{ github.event.inputs.branch }}
