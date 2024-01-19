@@ -8,7 +8,7 @@ on:
         default: "dev-0-1-0-separate-saphe-from-satysfi"
 
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
