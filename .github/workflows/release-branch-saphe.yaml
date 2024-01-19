@@ -1,11 +1,11 @@
-name: release-branch
+name: release-branch-saphe
 on:
   workflow_dispatch:
     inputs:
       branch:
         description: "Branch name"
         required: true
-        default: "master"
+        default: "dev-0-1-0-separate-saphe-from-satysfi"
 
 jobs:
   build:
@@ -14,7 +14,7 @@ jobs:
       matrix:
         platform:
           - linux/amd64
-          # - linux/arm64
+          - linux/arm64
     steps:
       - uses: actions/checkout@v4
       - uses: docker/setup-qemu-action@v3
@@ -37,8 +37,8 @@ jobs:
           echo "image_tag=branch-${{ github.event.inputs.branch }}" >> $GITHUB_OUTPUT
       - uses: docker/build-push-action@v5
         with:
-          context: branch
-          file: branch/Dockerfile
+          context: branch-saphe
+          file: branch-saphe/Dockerfile
           push: false
           load: true
           tags: amutake/satysfi:${{ steps.args.outputs.image_tag }}
@@ -53,10 +53,8 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache
       # run tests
       - run: docker run --rm amutake/satysfi:${{ steps.args.outputs.image_tag }} satysfi --help
-      - run: docker run --rm amutake/satysfi:${{ steps.args.outputs.image_tag }} satyrographos help
-      - run: docker run --rm -v $(pwd)/tests:/satysfi amutake/satysfi:${{ steps.args.outputs.image_tag }} satysfi minimum.saty
-      - run: docker run --rm -v $(pwd)/tests:/satysfi amutake/satysfi:${{ steps.args.outputs.image_tag }} satysfi with-dist.saty
+      - run: docker run --rm amutake/satysfi:${{ steps.args.outputs.image_tag }} saphe --help
       - run: git clone --branch ${{ github.event.inputs.branch }} https://github.com/gfngfn/SATySFi.git
-      - run: docker run --rm -v $(pwd)/SATySFi/demo:/satysfi amutake/satysfi:${{ steps.args.outputs.image_tag }} satysfi demo.saty
+      - run: docker run --rm -v $(pwd)/SATySFi/demo:/satysfi amutake/satysfi:${{ steps.args.outputs.image_tag }} sh -c "saphe solve demo.saty && saphe build demo.saty"
       # push
       - run: docker push amutake/satysfi:${{ steps.args.outputs.image_tag }}

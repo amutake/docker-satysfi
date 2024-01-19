@@ -56,3 +56,53 @@ jobs:
       - run: docker run --rm -v $(pwd)/tests:/satysfi amutake/satysfi:ci satysfi with-dist.saty
       - run: docker run --rm -v $(pwd)/tests:/satysfi amutake/satysfi:ci sh -c "opam install satysfi-base --ignore-constraints-on=satysfi && satyrographos install && satysfi with-base.saty"
         if: ${{ matrix.context == '.' || matrix.context == 'opam-slim' }}
+
+  # build v0.1.0 satysfi
+  build-saphe:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        branch:
+          # Change if this branch is deleted
+          - dev-0-1-0-separate-saphe-from-satysfi
+        platform:
+          - linux/amd64
+          # - linux/arm64
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-buildx-action@v3
+      - uses: actions/cache@v3
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-branch-${{ matrix.branch }}-${{ matrix.platform }}-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-branch-${{ matrix.branch }}-${{ matrix.platform }}-
+      - id: args
+        run: |
+          echo "date=$(date --iso-8601=seconds)" >> $GITHUB_OUTPUT
+          echo "revision=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+      - uses: docker/build-push-action@v5
+        with:
+          context: branch-saphe
+          file: branch-saphe/Dockerfile
+          push: false
+          load: true
+          tags: amutake/satysfi:ci
+          build-args: |
+            BUILD_DATE=${{ steps.args.outputs.date }}
+            VERSION=ci
+            REVISION=${{ steps.args.outputs.revision }}
+            # only 'branch-saphe' context
+            BRANCH=${{ matrix.branch }}
+            IMAGE_TAG=ci
+          platforms: ${{ matrix.platform }}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
+      # the size represents uncompressed. see https://gist.github.com/MichaelSimons/fb588539dcefd9b5fdf45ba04c302db6
+      - run: docker images
+      # run tests
+      - run: docker run --rm amutake/satysfi:ci satysfi --help
+      - run: docker run --rm amutake/satysfi:ci saphe --help
+      - run: git clone --branch ${{ matrix.branch }} https://github.com/gfngfn/SATySFi.git
+      - run: docker run --rm -v $(pwd)/SATySFi/demo:/satysfi amutake/satysfi:ci sh -c "saphe solve demo.saty && saphe build demo.saty"
