@@ -16,7 +16,7 @@ jobs:
         run: |
           echo "date=$(date --iso-8601=seconds)" >> $GITHUB_OUTPUT
           echo "version=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
-          echo "revision=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT          
+          echo "revision=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
   release:
     needs: info
     runs-on: ubuntu-latest

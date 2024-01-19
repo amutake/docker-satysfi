@@ -8,13 +8,8 @@ on:
         default: "dev-0-1-0-separate-saphe-from-satysfi"
 
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        platform:
-          - linux/amd64
-          - linux/arm64
     steps:
       - uses: actions/checkout@v4
       - uses: docker/setup-qemu-action@v3
@@ -22,9 +17,9 @@ jobs:
       - uses: actions/cache@v4
         with:
           path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-branch-${{ github.event.inputs.branch }}-${{ matrix.platform }}-${{ github.sha }}
+          key: ${{ runner.os }}-buildx-branch-${{ github.event.inputs.branch }}-${{ github.sha }}
           restore-keys: |
-            ${{ runner.os }}-buildx-branch-${{ github.event.inputs.branch }}-${{ matrix.platform }}-
+            ${{ runner.os }}-buildx-branch-${{ github.event.inputs.branch }}-
       - uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
@@ -39,8 +34,7 @@ jobs:
         with:
           context: branch-saphe
           file: branch-saphe/Dockerfile
-          push: false
-          load: true
+          push: true
           tags: amutake/satysfi:${{ steps.args.outputs.image_tag }}
           build-args: |
             BUILD_DATE=${{ steps.args.outputs.date }}
@@ -48,13 +42,6 @@ jobs:
             REVISION=${{ steps.args.outputs.revision }}
             BRANCH=${{ github.event.inputs.branch }}
             IMAGE_TAG=${{ steps.args.outputs.image_tag }}
-          platforms: ${{ matrix.platform }}
+          platforms: linux/amd64,linux/arm64
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
-      # run tests
-      - run: docker run --rm amutake/satysfi:${{ steps.args.outputs.image_tag }} satysfi --help
-      - run: docker run --rm amutake/satysfi:${{ steps.args.outputs.image_tag }} saphe --help
-      - run: git clone --branch ${{ github.event.inputs.branch }} https://github.com/gfngfn/SATySFi.git
-      - run: docker run --rm -v $(pwd)/SATySFi/demo:/satysfi amutake/satysfi:${{ steps.args.outputs.image_tag }} sh -c "saphe solve demo.saty && saphe build demo.saty"
-      # push
-      - run: docker push amutake/satysfi:${{ steps.args.outputs.image_tag }}
