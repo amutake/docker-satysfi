@@ -50,6 +50,14 @@ COPY --from=build-env /satyrographos-revision /satyrographos-revision
 
 RUN date --iso-8601=seconds > /build-date
 
+# Check all shared libraries installed
+RUN for bin in satysfi satyrographos; do \
+    ldd $(which $bin) | grep "not found"; \
+    if [ $? -eq 0 ]; then \
+    exit 1; \
+    fi; \
+    done
+
 # Setup build directory
 RUN mkdir /satysfi
 WORKDIR /satysfi

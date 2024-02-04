@@ -61,6 +61,14 @@ RUN git clone --depth=1 https://github.com/ocaml/opam-repository.git \
 COPY --from=build-env /satysfi /usr/local/bin/satysfi
 COPY --from=build-env /satyrographos /usr/local/bin/satyrographos
 
+# Check all shared libraries installed
+RUN for bin in satysfi satyrographos; do \
+      ldd $(which $bin) | grep "not found"; \
+      if [ $? -eq 0 ]; then \
+      exit 1; \
+      fi; \
+      done
+
 # Install satysfi-dist
 RUN opam install satysfi-dist.${SATYSFI_VERSION} \
       && opam clean -a -c -r --logs --unused-repositories \
