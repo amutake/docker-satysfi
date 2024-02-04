@@ -23,6 +23,14 @@ COPY --from=build-env /root/.satysfi /usr/local/share/satysfi
 COPY --from=build-env /satysfi /usr/local/bin/satysfi
 COPY --from=build-env /satyrographos /usr/local/bin/satyrographos
 
+# Check all shared libraries installed
+RUN for bin in satysfi satyrographos; do \
+  ldd $(which $bin) | grep "not found"; \
+  if [ $? -eq 0 ]; then \
+  exit 1; \
+  fi; \
+  done
+
 # Setup build directory
 RUN mkdir /satysfi
 WORKDIR /satysfi

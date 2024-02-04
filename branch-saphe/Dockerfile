@@ -46,6 +46,14 @@ RUN apt-get update && \
     apt-get install -y git wget unzip && \
     rm -rf /var/lib/apt/lists/*
 
+# Check all shared libraries installed
+RUN for bin in satysfi saphe; do \
+    ldd $(which $bin) | grep "not found"; \
+    if [ $? -eq 0 ]; then \
+    exit 1; \
+    fi; \
+    done
+
 # Setup build directory
 RUN mkdir /satysfi
 WORKDIR /satysfi
