@@ -22,8 +22,7 @@ RUN git clone https://github.com/gfngfn/SATySFi.git /root/SATySFi
 WORKDIR /root/SATySFi
 RUN git checkout ${BRANCH}
 RUN opam pin add --no-action --kind local satysfi .
-# temporary fix https://x.com/puripuri2100/status/1737857311866269876
-RUN opam install camlimages.5.0.4-1 satysfi
+RUN opam install satysfi
 RUN apt-get update \
     && apt-get install -y wget \
     && ./download-fonts.sh

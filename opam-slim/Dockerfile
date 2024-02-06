@@ -1,14 +1,13 @@
 FROM ghcr.io/amutake/satysfi-base-image:opam-2.1.3-ocaml-4.14.0 AS build-env
 
 # Versions
-ENV SATYSFI_VERSION=0.0.10
+ENV SATYSFI_VERSION=0.0.11
 ENV SATYROGRAPHOS_VERSION=0.0.2.13
 
 # Setup SATySFi & Satyrographos
 RUN apt-get update
 RUN opam update
-# temporary fix https://x.com/puripuri2100/status/1737857311866269876
-RUN opam install camlimages.5.0.4-1 satysfi.${SATYSFI_VERSION} satyrographos.${SATYROGRAPHOS_VERSION}
+RUN opam install satysfi.${SATYSFI_VERSION} satyrographos.${SATYROGRAPHOS_VERSION}
 RUN eval $(opam env) && cp $(which satysfi) / && cp $(which satyrographos) /
 
 # --
@@ -17,7 +16,7 @@ FROM ubuntu:22.04
 
 # Versions
 ENV OPAM_VERSION=2.1.3
-ENV SATYSFI_VERSION=0.0.10
+ENV SATYSFI_VERSION=0.0.11
 ENV SATYROGRAPHOS_VERSION=0.0.2.13
 
 # opam's config vars
