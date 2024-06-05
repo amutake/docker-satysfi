@@ -9,5 +9,5 @@ cd /path/to/docker-satysfi/branch-saphe
 docker build -t amutake/satysfi:saphe .
 
 cd /path/to/SATySFi/demo
-docker run --rm -it amutake/satysfi:saphe sh -c "saphe solve demo.saty && saphe build demo.saty"
+docker run --rm -it -v $(pwd):/satysfi amutake/satysfi:saphe sh -c "saphe solve demo.saty && saphe build demo.saty"
 ```

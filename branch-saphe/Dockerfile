@@ -16,7 +16,6 @@ RUN opam pin add --no-action --kind local saphe.dev .
 RUN opam pin add --no-action --kind local satysfi.dev .
 RUN opam update
 RUN opam install saphe satysfi
-RUN ./install-libs.sh ~/.saphe install
 
 # Generate metadata
 RUN git describe --tags > /satysfi-revision
@@ -35,7 +34,6 @@ RUN eval $(opam env) && \
 FROM ubuntu:22.04
 
 # Copy from build-env
-COPY --from=build-env /root/.saphe /root/.saphe
 COPY --from=build-env /saphe /usr/local/bin/saphe
 COPY --from=build-env /satysfi /usr/local/bin/satysfi
 COPY --from=build-env /satysfi-revision /satysfi-revision
