@@ -12,7 +12,7 @@ RUN eval $(opam env) && cp $(which satysfi) / && cp $(which satyrographos) /
 
 # --
 
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 
 # Versions
 ENV OPAM_VERSION=2.1.3

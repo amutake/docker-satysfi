@@ -31,7 +31,7 @@ RUN eval $(opam env) && \
 
 # --
 
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 
 # Copy from build-env
 COPY --from=build-env /saphe /usr/local/bin/saphe
