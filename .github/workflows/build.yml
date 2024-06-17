@@ -30,7 +30,7 @@ jobs:
         run: |
           echo "date=$(date --iso-8601=seconds)" >> $GITHUB_OUTPUT
           echo "revision=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
-      - uses: docker/build-push-action@v5
+      - uses: docker/build-push-action@v6
         with:
           context: ${{ matrix.context }}
           file: ${{ matrix.context }}/Dockerfile
@@ -82,7 +82,7 @@ jobs:
         run: |
           echo "date=$(date --iso-8601=seconds)" >> $GITHUB_OUTPUT
           echo "revision=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
-      - uses: docker/build-push-action@v5
+      - uses: docker/build-push-action@v6
         with:
           context: branch-saphe
           file: branch-saphe/Dockerfile
