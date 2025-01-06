@@ -30,7 +30,7 @@ jobs:
           echo "version=$(date --iso-8601=date)-${{ github.event.inputs.branch }}" >> $GITHUB_OUTPUT
           echo "revision=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
           echo "image_tag=branch-${{ github.event.inputs.branch }}" >> $GITHUB_OUTPUT
-      - uses: docker/build-push-action@v5
+      - uses: docker/build-push-action@v6
         with:
           context: branch-saphe
           file: branch-saphe/Dockerfile
