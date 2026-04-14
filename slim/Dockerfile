@@ -22,6 +22,9 @@ COPY --from=build-env /root/.satysfi /usr/local/share/satysfi
 COPY --from=build-env /satysfi /usr/local/bin/satysfi
 COPY --from=build-env /satyrographos /usr/local/bin/satyrographos
 
+# Install libpng
+RUN apt-get update && apt-get install -y libpng16-16t64 && rm -rf /var/lib/apt/lists/*
+
 # Check all shared libraries installed
 RUN for bin in satysfi satyrographos; do \
   ldd $(which $bin) | grep "not found"; \

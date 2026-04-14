@@ -47,6 +47,9 @@ COPY --from=build-env /satyrographos /usr/local/bin/satyrographos
 COPY --from=build-env /satysfi-revision /satysfi-revision
 COPY --from=build-env /satyrographos-revision /satyrographos-revision
 
+# Install libpng
+RUN apt-get update && apt-get install -y libpng16-16t64 && rm -rf /var/lib/apt/lists/*
+
 RUN date --iso-8601=seconds > /build-date
 
 # Check all shared libraries installed

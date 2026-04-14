@@ -16,7 +16,7 @@ ENV OPAMYES=true
 # Setup opam & OCaml
 # cf. https://opam.ocaml.org/doc/Install.html#Binary-distribution
 RUN apt-get update \
-	&& apt-get install -y curl patch unzip make m4 gcc git rsync pkg-config \
+	&& apt-get install -y curl patch unzip make m4 gcc git rsync pkg-config libpng-dev zlib1g-dev \
 	&& rm -rf /var/lib/apt/lists/*
 # currently, x86_64 and arm64 are supported
 RUN curl -fsL -o /usr/local/bin/opam https://github.com/ocaml/opam/releases/download/${OPAM_VERSION}/opam-${OPAM_VERSION}-$([ $(uname -m) = aarch64 ] && echo arm64 || uname -m)-linux \

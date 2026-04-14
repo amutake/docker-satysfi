@@ -32,7 +32,7 @@ RUN apt-get update \
       # - make: to build satyrographos packages
       # - git: to add/update opam repositories
       # - rsync: to pin local-bin packages
-      && apt-get install -y curl patch unzip make git rsync \
+      && apt-get install -y curl patch unzip make git rsync libpng16-16t64 \
       && rm -rf /var/lib/apt/lists/*
 RUN curl -fsL -o /usr/local/bin/opam https://github.com/ocaml/opam/releases/download/${OPAM_VERSION}/opam-${OPAM_VERSION}-$([ $(uname -m) = aarch64 ] && echo arm64 || uname -m)-linux \
       && chmod a+x /usr/local/bin/opam
